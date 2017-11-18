@@ -1,0 +1,45 @@
+{
+  "name": "water-festival-admin-panel",
+  "version": "0.0.1",
+  "description": "",
+  "homepage": "https://github.com/uwblueprint/water-festival",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/uwblueprint/water-festival.git"
+  },
+  "bugs": {
+    "url": "https://github.com/uwblueprint/water-festival/issues"
+  },
+  "dependencies": {
+    "axios": "^0.17.1",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "body-parser": "^1.18.2",
+    "connect-ensure-login": "^0.1.1",
+    "cookie-parser": "^1.3.5",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "express-session": "^1.11.3",
+    "morgan": "^1.6.1",
+    "passport": "^0.2.2",
+    "passport-local": "^1.0.0",
+    "react": "^16.1.1",
+    "react-bootstrap": "^0.31.5",
+    "react-bootstrap-table": "^4.1.4",
+    "react-dom": "^16.1.1",
+    "react-router": "^4.2.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-react-native": "^4.0.0",
+    "nodemon": "^1.12.1",
+    "webpack": "^3.8.1"
+  },
+  "scripts": {
+    "start": "nodemon --use_strict ./server/server.js",
+    "bundle": "webpack"
+  }
+}
