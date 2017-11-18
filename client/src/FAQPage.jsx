@@ -56,9 +56,9 @@ class FAQ extends Component {
       alert("Please fill out all fields") 
     }
 	}
-  onDeleteRow(rowIDs) {
-		if(rowIDs) {
-			handleDeleteQuestions(rowIDs);
+  onDeleteRow(questionIDs) {
+		if(questionIDs) {
+			handleDeleteQuestions(questionIDs);
 		}
   }
   beforeSaveCell(row, cellName, cellValue) {
