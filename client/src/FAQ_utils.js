@@ -7,36 +7,33 @@ export function getAllQuestions() {
     })
 }
 
-export function handleQuestionEdit(row) {
+export function handleQuestionEdit(faq) {
   axios({
     method: "post",
     url: "http://localhost:9090/faq/edit/",
-    data: row 
+    data: faq
   }).then(response => {
   }).catch(function (error) {
     console.log(error);
   });
 }
-export function handleDeleteQuestions(rowIDs) {
+export function handleDeleteQuestions(faqIDs) {
   axios({
     method: "post",
     url: "http://localhost:9090/faq/delete/",
     data: {
-      rowIDs: rowIDs
+      faqIDs: faqIDs
     }
   }).then(response => {
   }).catch(function (error) {
     console.log(error);
   });
 }
-export function handleInsertQuestion(row) {
+export function handleInsertQuestion(faq) {
   axios({
     method: "post",
     url: "http://localhost:9090/faq/insert/",
-    data: {
-      question: row.question,
-      answer: row.answer	
-    }
+    data: faq
   }).then(response => {
   }).catch(function (error) {
     console.log(error);

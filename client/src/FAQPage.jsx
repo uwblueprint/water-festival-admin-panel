@@ -92,27 +92,23 @@ class FAQ extends Component {
         <div>
           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" />
           <link rel="stylesheet" href="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css"></link>
-
-          <Grid style={{"width": "65%"}}>
-            <Row className="show-grid">
-              <BootstrapTable 
-                data={this.state.tableData} 
-                insertRow
-                deleteRow 
-                cellEdit={ cellEdit } 
-                selectRow={ selectRow } 
-                striped 
-                hover 
-                condensed 
-                pagination 
-                options={options}
-              >
-                <TableHeaderColumn dataField='id' dataSort isKey={ true } hidden hiddenOnInsert>ID</TableHeaderColumn>
-                <TableHeaderColumn dataField='question'>Question</TableHeaderColumn>
-                <TableHeaderColumn dataField='answer'>Answer</TableHeaderColumn>
-              </BootstrapTable>
-            </Row>
-          </Grid>
+          <h3> FAQ </h3>
+          <BootstrapTable 
+            data={this.state.tableData} 
+            insertRow
+            deleteRow 
+            cellEdit={ cellEdit } 
+            selectRow={ selectRow } 
+            striped 
+            hover 
+            condensed 
+            pagination 
+            options={options}
+          >
+            <TableHeaderColumn dataField='id' dataSort isKey={ true } hidden hiddenOnInsert>ID</TableHeaderColumn>
+            <TableHeaderColumn dataField='question'>Question</TableHeaderColumn>
+            <TableHeaderColumn dataField='answer'>Answer</TableHeaderColumn>
+          </BootstrapTable>
         </div>
       );
     }else{
@@ -122,5 +118,4 @@ class FAQ extends Component {
   }
 }
 
-//export default FAQ;
-render(<FAQ />, document.getElementById('react-app'));
+export default FAQ;
