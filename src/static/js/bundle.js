@@ -57068,17 +57068,19 @@ var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var url = 'http://localhost:9090';
+
 function getAllQuestions() {
   return (0, _axios2.default)({
-    method: "post",
-    url: "http://localhost:9090/faq/list/"
+    method: "get",
+    url: url + '/faq/list/'
   });
 }
 
 function handleQuestionEdit(faq) {
   (0, _axios2.default)({
     method: "post",
-    url: "http://localhost:9090/faq/edit/",
+    url: url + '90/faq/edit/',
     data: faq
   }).then(function (response) {}).catch(function (error) {
     console.log(error);
@@ -57087,7 +57089,7 @@ function handleQuestionEdit(faq) {
 function handleDeleteQuestions(faqIDs) {
   (0, _axios2.default)({
     method: "post",
-    url: "http://localhost:9090/faq/delete/",
+    url: url + '/faq/delete/',
     data: {
       faqIDs: faqIDs
     }
@@ -57096,9 +57098,11 @@ function handleDeleteQuestions(faqIDs) {
   });
 }
 function handleInsertQuestion(faq) {
+  console.log('obj');
+  console.log(faq);
   (0, _axios2.default)({
     method: "post",
-    url: "http://localhost:9090/faq/insert/",
+    url: url + '/faq/insert/',
     data: faq
   }).then(function (response) {}).catch(function (error) {
     console.log(error);
