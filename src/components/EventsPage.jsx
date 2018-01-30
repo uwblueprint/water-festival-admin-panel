@@ -84,12 +84,23 @@ class Events extends Component {
           id: 0,
           createdAt: moment(), 
           title: "Water Games",
-          descriptions: "It's fun",
+          description: "It's fun",
           startTime: moment(),
           endTime: moment(),
           location: "MC",
           grade: 3
-        }]
+        },
+        {
+          id: 2,
+          createdAt: moment(), 
+          title: "Dinosaur Excavation",
+          description: "Come be a paleontologist for a day. Excavate dinosaur fossils!",
+          startTime: moment(),
+          endTime: moment(),
+          location: "Museum",
+          grade: 2
+        }
+      ]
     };
   }
 

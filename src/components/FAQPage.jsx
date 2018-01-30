@@ -23,14 +23,21 @@ class FAQ extends Component {
       tableData: [
         {
           id: 0,
-          question: "How are you?",
-          answer: "Doing well" 
+          question: "Where are the washrooms?",
+          answer: "The washrooms are locted by the museum. Please consult the map for directions." 
         },
         {
           id: 1,
-          question: "Where is this thing?",
-          answer: "Waterloo!" 
-        }]
+          question: "How does parking work?",
+          answer: "The parking is located by the entrace. There will be ushers there to guide you." 
+        },
+        {
+          id: 2,
+          question: "What should I bring?",
+          answer: "Sunscreen, water, and a lunch. A towel to sit on during lunch may also come in handy, as lunch will be held outside." 
+        
+        }
+      ]
     };
   }
 

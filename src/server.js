@@ -1,5 +1,5 @@
 var express = require('express');
-var React = require('react');
+var path = require('path')
 var passport = require('passport');
 var Strategy = require('passport-local').Strategy;
 var db = require('./db');
@@ -40,15 +40,8 @@ passport.deserializeUser(function(id, cb) {
   });
 });
 
-
-
-
 // Create a new Express application.
 var app = express();
-
-// Configure view engine to render EJS templates.
-app.use(express.static('./server/static/'));
-app.use(express.static('./client/dist/'));
 
 // Use application-level middleware for common functionality, including
 // logging, parsing, and session handling.
@@ -62,34 +55,35 @@ app.use(require('express-session')({ secret: 'keyboard cat', resave: false, save
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Define routes.
-app.get('/',
-  function(req, res) {
-    res.render('home', { user: req.user });
-  });
+app.use(express.static(__dirname+'/static/'));
 
-app.get('/login',
-  function(req, res){
-    res.render('login');
-  });
-  
-app.post('/login', 
-  passport.authenticate('local', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
-  });
-  
 app.get('/logout',
   function(req, res){
     req.logout();
     res.redirect('/');
   });
 
-app.get('/profile',
-  require('connect-ensure-login').ensureLoggedIn(),
+app.get('/dashboard',
+  require('connect-ensure-login').ensureLoggedIn("/"),
   function(req, res){
-    res.render('profile', { user: req.user });
+    res.sendFile(__dirname+'/static/view.html')
   });
+
+app.get('/*', 
+  function(req, res){
+    if(req.isAuthenticated()){
+      res.redirect("/dashboard")
+    }else{
+      res.sendFile(__dirname+'/static/view.html')
+    }
+  });
+
+app.post('/login', 
+  passport.authenticate('local', { failureRedirect: '/' }),
+  function(req, res) {
+    res.redirect('/dashboard');
+  });
+
 
 app.listen(3000, () => {
   console.log('Server is running on http://localhost:3000 or http://127.0.0.1:3000');
