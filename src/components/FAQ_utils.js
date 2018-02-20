@@ -1,18 +1,18 @@
 import axios from 'axios';
 
-const url = 'http://localhost:9090';
+const URL = 'https://water-fest.herokuapp.com';
 
 export function getAllQuestions() {
     return axios({
 			method: "get",
-      url: `${url}/faq/list/`
+      url: `${URL}/faq/list/`
     })
 }
 
 export function handleQuestionEdit(faq) {
   axios({
-    method: "post",
-    url: `${url}90/faq/edit/`,
+    method: "put",
+    url: `${URL}/faq/edit/`,
     data: faq
   }).then(response => {
   }).catch(function (error) {
@@ -21,8 +21,8 @@ export function handleQuestionEdit(faq) {
 }
 export function handleDeleteQuestions(faqIDs) {
   axios({
-    method: "post",
-    url: `${url}/faq/delete/`,
+    method: "delete",
+    url: `${URL}/faq/delete/`,
     data: {
       faqIDs: faqIDs
     }
@@ -32,11 +32,9 @@ export function handleDeleteQuestions(faqIDs) {
   });
 }
 export function handleInsertQuestion(faq) {
-	console.log('obj');
-	console.log(faq);
   axios({
-    method: "post",
-    url: `${url}/faq/insert/`,
+    method: "put",
+    url: `${URL}/faq/insert/`,
     data: faq
   }).then(response => {
   }).catch(function (error) {

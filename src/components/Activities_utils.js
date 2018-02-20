@@ -1,16 +1,19 @@
 import axios from 'axios';
+import moment from 'moment';
+
+const URL = 'https://water-fest.herokuapp.com';
 
 export function getAllActivities() {
     return axios({
-			method: "post",
-      url: "http://localhost:9090/activities/list/"
+			method: "get",
+      url: `${URL}/activities/list/`
     })
 }
 
 export function handleEditActivities(activity) {
   axios({
-    method: "post",
-    url: "http://localhost:9090/activities/edit/",
+    method: "put",
+    url: `${URL}/activities/edit/`,
     data: activity
   }).then(response => {
   }).catch(function (error) {
@@ -19,8 +22,8 @@ export function handleEditActivities(activity) {
 }
 export function handleDeleteActivities(activityIDs) {
   axios({
-    method: "post",
-    url: "http://localhost:9090/activities/delete/",
+    method: "delete",
+    url: `${URL}/activities/delete/`,
     data: {
       activityIDs: activityIDs
     }
@@ -31,8 +34,8 @@ export function handleDeleteActivities(activityIDs) {
 }
 export function handleInsertActivities(activity) {
   axios({
-    method: "post",
-    url: "http://localhost:9090/activities/insert/",
+    method: "put",
+    url: `${URL}/activities/insert/`,
     data: activity
   }).then(response => {
   }).catch(function (error) {
@@ -40,6 +43,7 @@ export function handleInsertActivities(activity) {
   });
 }
 
-export function dateFormatter(cell, row) {
-  return(cell.format('MMM DD, h:mm a'));
+export function dateFormatter(date, row) {
+	const dateTime = new Date(date);
+  return(moment(dateTime).format('MMM DD, h:mm a'));
 }

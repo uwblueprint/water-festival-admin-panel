@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {render} from 'react-dom';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import DateTime from 'react-datetime';
-import moment from 'moment'
+import moment from 'moment';
 import {
   getAllActivities,
   handleEditActivities,

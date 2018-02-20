@@ -42,7 +42,6 @@ class FAQ extends Component {
   }
 
   componentDidMount() {
-		//e.preventDefault()
     var questionsPromise = getAllQuestions();
     questionsPromise.then(response => {
       if(response.data){
@@ -53,6 +52,17 @@ class FAQ extends Component {
 			console.log(error);
 		});
   }
+	componentWillReceiveProps(nextProps) {
+    var questionsPromise = getAllQuestions();
+    questionsPromise.then(response => {
+      if(response.data){
+        this.setTableData(response.data);
+      }
+
+		}).catch(function (error) {
+			console.log(error);
+		});
+	}
   setTableData(responseData) {
     this.setState({ tableData: responseData })
   }
