@@ -44734,9 +44734,9 @@ var _FAQPage = __webpack_require__(331);
 
 var _FAQPage2 = _interopRequireDefault(_FAQPage);
 
-var _EventsPage = __webpack_require__(389);
+var _ActivitiesPage = __webpack_require__(389);
 
-var _EventsPage2 = _interopRequireDefault(_EventsPage);
+var _ActivitiesPage2 = _interopRequireDefault(_ActivitiesPage);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -44796,7 +44796,7 @@ var App = function (_Component) {
             _Row2.default,
             { className: 'show-grid' },
             _react2.default.createElement(_FAQPage2.default, null),
-            _react2.default.createElement(_EventsPage2.default, null)
+            _react2.default.createElement(_ActivitiesPage2.default, null)
           )
         )
       );
@@ -46195,11 +46195,11 @@ var FAQ = function (_Component) {
       tableData: [{
         id: 0,
         question: "Where are the washrooms?",
-        answer: "The washrooms are locted by the museum. Please consult the map for directions."
+        answer: "The washrooms are located by the museum. Please consult the map for directions."
       }, {
         id: 1,
         question: "How does parking work?",
-        answer: "The parking is located by the entrace. There will be ushers there to guide you."
+        answer: "The parking is located by the entrance. There will be ushers there to guide you."
       }, {
         id: 2,
         question: "What should I bring?",
@@ -58024,7 +58024,7 @@ var _moment = __webpack_require__(0);
 
 var _moment2 = _interopRequireDefault(_moment);
 
-var _Events_utils = __webpack_require__(399);
+var _Activities_utils = __webpack_require__(399);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -58137,13 +58137,13 @@ var DateEditor = function (_Component) {
   return DateEditor;
 }(_react.Component);
 
-var Events = function (_Component2) {
-  _inherits(Events, _Component2);
+var Activities = function (_Component2) {
+  _inherits(Activities, _Component2);
 
-  function Events(props) {
-    _classCallCheck(this, Events);
+  function Activities(props) {
+    _classCallCheck(this, Activities);
 
-    var _this3 = _possibleConstructorReturn(this, (Events.__proto__ || Object.getPrototypeOf(Events)).call(this, props));
+    var _this3 = _possibleConstructorReturn(this, (Activities.__proto__ || Object.getPrototypeOf(Activities)).call(this, props));
 
     _this3.setTableData = _this3.setTableData.bind(_this3);
     _this3.onAddRow = _this3.onAddRow.bind(_this3);
@@ -58158,7 +58158,7 @@ var Events = function (_Component2) {
         description: "It's fun",
         startTime: (0, _moment2.default)(),
         endTime: (0, _moment2.default)(),
-        location: "MC",
+        station: "MC",
         grade: 3
       }, {
         id: 2,
@@ -58167,21 +58167,21 @@ var Events = function (_Component2) {
         description: "Come be a paleontologist for a day. Excavate dinosaur fossils!",
         startTime: (0, _moment2.default)(),
         endTime: (0, _moment2.default)(),
-        location: "Museum",
+        station: "Museum",
         grade: 2
       }]
     };
     return _this3;
   }
 
-  _createClass(Events, [{
+  _createClass(Activities, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
       var _this4 = this;
 
       //e.preventDefault()
-      var eventsPromise = (0, _Events_utils.getAllEvents)();
-      eventsPromise.then(function (response) {
+      var activitiesPromise = (0, _Activities_utils.getAllActivities)();
+      activitiesPromise.then(function (response) {
         if (response.data) {
           _this4.setTableData(response.data);
         }
@@ -58197,17 +58197,17 @@ var Events = function (_Component2) {
   }, {
     key: 'onAddRow',
     value: function onAddRow(row) {
-      if (row && row.title != "" && row.description != "" && row.grade != "" && row.location) {
-        handleInsertEvent(row);
+      if (row && row.title != "" && row.description != "" && row.grade != "" && row.station) {
+        (0, _Activities_utils.handleInsertActivities)(row);
       } else {
         alert("Please fill out all fields");
       }
     }
   }, {
     key: 'onDeleteRow',
-    value: function onDeleteRow(eventIDs) {
-      if (eventIDs) {
-        (0, _Events_utils.handleDeleteEvents)(eventIDs);
+    value: function onDeleteRow(activityIDs) {
+      if (activityIDs) {
+        (0, _Activities_utils.handleDeleteActivities)(activityIDs);
       }
     }
   }, {
@@ -58215,7 +58215,7 @@ var Events = function (_Component2) {
     value: function beforeSaveCell(row, cellName, cellValue) {
       if (row.hasOwnProperty("id") && cellValue != "") {
         row[cellName] = cellValue;
-        (0, _Events_utils.handleEditEvents)(row);
+        (0, _Activities_utils.handleEditActivities)(row);
       } else {
         alert("Please don't leave a field blank");
         return false;
@@ -58249,7 +58249,7 @@ var Events = function (_Component2) {
           _react2.default.createElement(
             'h3',
             null,
-            ' Events '
+            ' Activities '
           ),
           _react2.default.createElement(
             _reactBootstrapTable.BootstrapTable,
@@ -58282,18 +58282,18 @@ var Events = function (_Component2) {
             ),
             _react2.default.createElement(
               _reactBootstrapTable.TableHeaderColumn,
-              { dataField: 'startTime', dataFormat: _Events_utils.dateFormatter, customEditor: { getElement: createDateEditor } },
+              { dataField: 'startTime', dataFormat: _Activities_utils.dateFormatter, customEditor: { getElement: createDateEditor } },
               'Start Time'
             ),
             _react2.default.createElement(
               _reactBootstrapTable.TableHeaderColumn,
-              { dataField: 'endTime', dataFormat: _Events_utils.dateFormatter, customEditor: { getElement: createDateEditor } },
+              { dataField: 'endTime', dataFormat: _Activities_utils.dateFormatter, customEditor: { getElement: createDateEditor } },
               'End Time'
             ),
             _react2.default.createElement(
               _reactBootstrapTable.TableHeaderColumn,
-              { dataField: 'location' },
-              'Location'
+              { dataField: 'station' },
+              'Station'
             ),
             _react2.default.createElement(
               _reactBootstrapTable.TableHeaderColumn,
@@ -58308,10 +58308,10 @@ var Events = function (_Component2) {
     }
   }]);
 
-  return Events;
+  return Activities;
 }(_react.Component);
 
-exports.default = Events;
+exports.default = Activities;
 
 /***/ }),
 /* 390 */
@@ -60596,10 +60596,10 @@ module.exports = DateTimePickerTime;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getAllEvents = getAllEvents;
-exports.handleEditEvents = handleEditEvents;
-exports.handleDeleteEvents = handleDeleteEvents;
-exports.handleInsertEvent = handleInsertEvent;
+exports.getAllActivities = getAllActivities;
+exports.handleEditActivities = handleEditActivities;
+exports.handleDeleteActivities = handleDeleteActivities;
+exports.handleInsertActivities = handleInsertActivities;
 exports.dateFormatter = dateFormatter;
 
 var _axios = __webpack_require__(117);
@@ -60608,38 +60608,38 @@ var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function getAllEvents() {
+function getAllActivities() {
   return (0, _axios2.default)({
     method: "post",
-    url: "http://localhost:9090/event/list/"
+    url: "http://localhost:9090/activities/list/"
   });
 }
 
-function handleEditEvents(event) {
+function handleEditActivities(activity) {
   (0, _axios2.default)({
     method: "post",
-    url: "http://localhost:9090/event/edit/",
-    data: event
+    url: "http://localhost:9090/activities/edit/",
+    data: activity
   }).then(function (response) {}).catch(function (error) {
     console.log(error);
   });
 }
-function handleDeleteEvents(eventIDs) {
+function handleDeleteActivities(activityIDs) {
   (0, _axios2.default)({
     method: "post",
-    url: "http://localhost:9090/event/delete/",
+    url: "http://localhost:9090/activities/delete/",
     data: {
-      eventIDs: eventIDs
+      activityIDs: activityIDs
     }
   }).then(function (response) {}).catch(function (error) {
     console.log(error);
   });
 }
-function handleInsertEvent(event) {
+function handleInsertActivities(activity) {
   (0, _axios2.default)({
     method: "post",
-    url: "http://localhost:9090/event/insert/",
-    data: event
+    url: "http://localhost:9090/activities/insert/",
+    data: activity
   }).then(function (response) {}).catch(function (error) {
     console.log(error);
   });

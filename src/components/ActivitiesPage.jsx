@@ -30,11 +30,11 @@ class DateEditor extends Component {
   updateData() {
     this.props.onUpdate(this.state.date);
   }
-  handleClick(){
+  handleClick() {
     this.setState({ backgroundColor: 'red' })
   }
   handleDateTimeChange(e) {
-    if(e.target){
+    if (e.target) {
       this.setState({ date: e.target.value });
     }
   }
@@ -108,7 +108,7 @@ class Activities extends Component {
 		//e.preventDefault()
     var activitiesPromise = getAllActivities();
     activitiesPromise.then(response => {
-      if(response.data){
+      if (response.data) {
         this.setTableData(response.data);
       }
 
@@ -120,22 +120,22 @@ class Activities extends Component {
     this.setState({ tableData: responseData })
   }
 	onAddRow(row) {
-		if(row && row.title != "" && row.description!= "" && row.grade != "" && row.station {
+		if (row && row.title != "" && row.description!= "" && row.grade != "" && row.station) {
 			handleInsertActivities(row);
-    }else{
+    } else {
       alert("Please fill out all fields")
     }
 	}
   onDeleteRow(activityIDs) {
-		if(activityIDs) {
+		if (activityIDs) {
 			handleDeleteActivities(activityIDs);
 		}
   }
   beforeSaveCell(row, cellName, cellValue) {
-    if(row.hasOwnProperty("id") && cellValue != "") {
+    if (row.hasOwnProperty("id") && cellValue != "") {
       row[cellName] = cellValue;
 			handleEditActivities(row);
-    }else{
+    } else {
       alert("Please don't leave a field blank");
       return false;
     }
@@ -185,7 +185,7 @@ class Activities extends Component {
           </BootstrapTable>
         </div>
       );
-    }else{
+    } else {
       return null;
     }
 
