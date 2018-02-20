@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/lib/Button'
 import Grid from 'react-bootstrap/lib/Grid'
 import Row from 'react-bootstrap/lib/Row'
 import FAQ from './FAQPage.jsx';
-import Events from './EventsPage.jsx';
+import Events from './ActivitiesPage.jsx';
 
 class App extends Component {
   constructor(props) {
