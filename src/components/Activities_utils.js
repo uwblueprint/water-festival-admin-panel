@@ -1,39 +1,39 @@
 import axios from 'axios';
 
-export function getAllEvents() {
+export function getAllActivities() {
     return axios({
 			method: "post",
-      url: "http://localhost:9090/event/list/"
+      url: "http://localhost:9090/activities/list/"
     })
 }
 
-export function handleEditEvents(event) {
+export function handleEditActivities(activity) {
   axios({
     method: "post",
-    url: "http://localhost:9090/event/edit/",
-    data: event
+    url: "http://localhost:9090/activities/edit/",
+    data: activity
   }).then(response => {
   }).catch(function (error) {
     console.log(error);
   });
 }
-export function handleDeleteEvents(eventIDs) {
+export function handleDeleteActivities(activityIDs) {
   axios({
     method: "post",
-    url: "http://localhost:9090/event/delete/",
+    url: "http://localhost:9090/activities/delete/",
     data: {
-      eventIDs: eventIDs
+      activityIDs: activityIDs
     }
   }).then(response => {
   }).catch(function (error) {
     console.log(error);
   });
 }
-export function handleInsertEvent(event) {
+export function handleInsertActivities(activity) {
   axios({
     method: "post",
-    url: "http://localhost:9090/event/insert/",
-    data: event
+    url: "http://localhost:9090/activities/insert/",
+    data: activity
   }).then(response => {
   }).catch(function (error) {
     console.log(error);
@@ -43,4 +43,3 @@ export function handleInsertEvent(event) {
 export function dateFormatter(cell, row) {
   return(cell.format('MMM DD, h:mm a'));
 }
- 
