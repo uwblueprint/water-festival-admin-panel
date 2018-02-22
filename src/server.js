@@ -1,9 +1,9 @@
 var express = require('express');
 var path = require('path')
 var passport = require('passport');
-var Strategy = require('passport-local').Strategy;
+var LocalStrategy = require('passport-local').Strategy;
 var db = require('./db');
-
+var bcrypt = require('bcrypt')
 
 // Configure the local strategy for use by Passport.
 //
@@ -11,13 +11,19 @@ var db = require('./db');
 // (`username` and `password`) submitted by the user.  The function must verify
 // that the password is correct and then invoke `cb` with a user object, which
 // will be set at `req.user` in route handlers after authentication.
-passport.use(new Strategy(
+passport.use(new LocalStrategy(
   function(username, password, cb) {
     db.users.findByUsername(username, function(err, user) {
       if (err) { return cb(err); }
       if (!user) { return cb(null, false); }
-      if (user.password != password) { return cb(null, false); }
-      return cb(null, user);
+      bcrypt.compare(password, user.password, function(err, res) {
+        if (err) return cb(err);
+        if (res === false) {
+          return cb(null, false);
+        } else {
+          return cb(null, user);
+        }
+      });
     });
   }));
 
