@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import {render} from 'react-dom';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import DateTime from 'react-datetime';
-import moment from 'moment'
+import moment from 'moment';
 import {
-  getAllEvents,
-  handleEditEvents,
-  handleDeleteEvents,
-  handleInsertEvents,
+  getAllActivities,
+  handleEditActivities,
+  handleDeleteActivities,
+  handleInsertActivities,
   dateFormatter
-} from './Events_utils';
+} from './Activities_utils';
 
 const createDateEditor = (onUpdate, props) => (<DateEditor onUpdate={ onUpdate } {...props}/>);
 
@@ -30,11 +30,11 @@ class DateEditor extends Component {
   updateData() {
     this.props.onUpdate(this.state.date);
   }
-  handleClick(){
+  handleClick() {
     this.setState({ backgroundColor: 'red' })
   }
   handleDateTimeChange(e) {
-    if(e.target){
+    if (e.target) {
       this.setState({ date: e.target.value });
     }
   }
@@ -49,7 +49,7 @@ class DateEditor extends Component {
           <div className='modal-dialog'>
             <div className='modal-content'>
               <div className='modal-body'>
-                <DateTime 
+                <DateTime
                   ref='dateTimeRef'
                   value={ this.state.date}
                   input={true}
@@ -70,7 +70,7 @@ class DateEditor extends Component {
   }
   }
 
-class Events extends Component {
+class Activities extends Component {
   constructor(props) {
     super(props);
     this.setTableData = this.setTableData.bind(this);
@@ -82,22 +82,22 @@ class Events extends Component {
       tableData: [
         {
           id: 0,
-          createdAt: moment(), 
+          createdAt: moment(),
           title: "Water Games",
           description: "It's fun",
           startTime: moment(),
           endTime: moment(),
-          location: "MC",
+          station: "MC",
           grade: 3
         },
         {
           id: 2,
-          createdAt: moment(), 
+          createdAt: moment(),
           title: "Dinosaur Excavation",
           description: "Come be a paleontologist for a day. Excavate dinosaur fossils!",
           startTime: moment(),
           endTime: moment(),
-          location: "Museum",
+          station: "Museum",
           grade: 2
         }
       ]
@@ -106,9 +106,9 @@ class Events extends Component {
 
   componentDidMount() {
 		//e.preventDefault()
-    var eventsPromise = getAllEvents();
-    eventsPromise.then(response => {
-      if(response.data){
+    var activitiesPromise = getAllActivities();
+    activitiesPromise.then(response => {
+      if (response.data) {
         this.setTableData(response.data);
       }
 
@@ -117,28 +117,28 @@ class Events extends Component {
 		});
   }
   setTableData(responseData) {
-    this.setState({ tableData: responseData }) 
+    this.setState({ tableData: responseData })
   }
 	onAddRow(row) {
-		if(row && row.title != "" && row.description!= "" && row.grade != "" && row.location) {
-			handleInsertEvent(row);
-    }else{
-      alert("Please fill out all fields") 
+		if (row && row.title != "" && row.description!= "" && row.grade != "" && row.station) {
+			handleInsertActivities(row);
+    } else {
+      alert("Please fill out all fields")
     }
 	}
-  onDeleteRow(eventIDs) {
-		if(eventIDs) {
-			handleDeleteEvents(eventIDs);
+  onDeleteRow(activityIDs) {
+		if (activityIDs) {
+			handleDeleteActivities(activityIDs);
 		}
   }
   beforeSaveCell(row, cellName, cellValue) {
-    if(row.hasOwnProperty("id") && cellValue != "") {
+    if (row.hasOwnProperty("id") && cellValue != "") {
       row[cellName] = cellValue;
-			handleEditEvents(row);	
-    }else{
-      alert("Please don't leave a field blank"); 
+			handleEditActivities(row);
+    } else {
+      alert("Please don't leave a field blank");
       return false;
-    }	
+    }
   }
   render() {
     if (this.state.tableData.length !== 0) {
@@ -162,17 +162,17 @@ class Events extends Component {
         <div>
           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" />
           <link rel="stylesheet" href="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css"></link>
-          <h3> Events </h3>
-          <BootstrapTable 
-            data={this.state.tableData} 
+          <h3> Activities </h3>
+          <BootstrapTable
+            data={this.state.tableData}
             insertRow
-            deleteRow 
-            cellEdit={ cellEdit } 
-            selectRow={ selectRow } 
-            striped 
-            hover 
-            condensed 
-            pagination 
+            deleteRow
+            cellEdit={ cellEdit }
+            selectRow={ selectRow }
+            striped
+            hover
+            condensed
+            pagination
             options={options}
           >
             <TableHeaderColumn dataField='id' dataSort isKey={ true } hidden hiddenOnInsert>ID</TableHeaderColumn>
@@ -180,16 +180,16 @@ class Events extends Component {
             <TableHeaderColumn dataField='description'>Description</TableHeaderColumn>
             <TableHeaderColumn dataField='startTime' dataFormat={ dateFormatter } customEditor={ { getElement: createDateEditor } }>Start Time</TableHeaderColumn>
             <TableHeaderColumn dataField='endTime' dataFormat={ dateFormatter } customEditor={ { getElement: createDateEditor } }>End Time</TableHeaderColumn>
-            <TableHeaderColumn dataField='location'>Location</TableHeaderColumn>
+            <TableHeaderColumn dataField='station'>Station</TableHeaderColumn>
             <TableHeaderColumn dataField='grade'>Grade</TableHeaderColumn>
           </BootstrapTable>
         </div>
       );
-    }else{
+    } else {
       return null;
     }
 
   }
 }
 
-export default Events;
+export default Activities;

@@ -7,7 +7,7 @@ import {
   getAllQuestions,
   handleQuestionEdit,
   handleDeleteQuestions,
-  handleInsertQuestion 
+  handleInsertQuestion
 } from './FAQ_utils';
 
 
@@ -24,25 +24,24 @@ class FAQ extends Component {
         {
           id: 0,
           question: "Where are the washrooms?",
-          answer: "The washrooms are locted by the museum. Please consult the map for directions." 
+          answer: "The washrooms are located by the museum. Please consult the map for directions."
         },
         {
           id: 1,
           question: "How does parking work?",
-          answer: "The parking is located by the entrace. There will be ushers there to guide you." 
+          answer: "The parking is located by the entrance. There will be ushers there to guide you."
         },
         {
           id: 2,
           question: "What should I bring?",
-          answer: "Sunscreen, water, and a lunch. A towel to sit on during lunch may also come in handy, as lunch will be held outside." 
-        
+          answer: "Sunscreen, water, and a lunch. A towel to sit on during lunch may also come in handy, as lunch will be held outside."
+
         }
       ]
     };
   }
 
   componentDidMount() {
-		//e.preventDefault()
     var questionsPromise = getAllQuestions();
     questionsPromise.then(response => {
       if(response.data){
@@ -53,14 +52,25 @@ class FAQ extends Component {
 			console.log(error);
 		});
   }
+	componentWillReceiveProps(nextProps) {
+    var questionsPromise = getAllQuestions();
+    questionsPromise.then(response => {
+      if(response.data){
+        this.setTableData(response.data);
+      }
+
+		}).catch(function (error) {
+			console.log(error);
+		});
+	}
   setTableData(responseData) {
-    this.setState({ tableData: responseData }) 
+    this.setState({ tableData: responseData })
   }
 	onAddRow(row) {
 		if(row && row.question != "" && row.answer != "") {
 			handleInsertQuestion(row);
     }else{
-      alert("Please fill out all fields") 
+      alert("Please fill out all fields")
     }
 	}
   onDeleteRow(questionIDs) {
@@ -71,11 +81,11 @@ class FAQ extends Component {
   beforeSaveCell(row, cellName, cellValue) {
     if(row.hasOwnProperty("id") && cellValue != "") {
       row[cellName] = cellValue;
-			handleQuestionEdit(row);	
+			handleQuestionEdit(row);
     }else{
-      alert("Please don't leave a field blank"); 
+      alert("Please don't leave a field blank");
       return false;
-    }	
+    }
   }
   render() {
     if (this.state.tableData.length !== 0) {
@@ -100,16 +110,16 @@ class FAQ extends Component {
           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" />
           <link rel="stylesheet" href="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css"></link>
           <h3> FAQ </h3>
-          <BootstrapTable 
-            data={this.state.tableData} 
+          <BootstrapTable
+            data={this.state.tableData}
             insertRow
-            deleteRow 
-            cellEdit={ cellEdit } 
-            selectRow={ selectRow } 
-            striped 
-            hover 
-            condensed 
-            pagination 
+            deleteRow
+            cellEdit={ cellEdit }
+            selectRow={ selectRow }
+            striped
+            hover
+            condensed
+            pagination
             options={options}
           >
             <TableHeaderColumn dataField='id' dataSort isKey={ true } hidden hiddenOnInsert>ID</TableHeaderColumn>

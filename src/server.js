@@ -5,6 +5,8 @@ var LocalStrategy = require('passport-local').Strategy;
 var db = require('./db');
 var bcrypt = require('bcrypt')
 
+const PORT = process.env.PORT || 3000;
+
 // Configure the local strategy for use by Passport.
 //
 // The local strategy require a `verify` function which receives the credentials
@@ -75,7 +77,7 @@ app.get('/dashboard',
     res.sendFile(__dirname+'/static/view.html')
   });
 
-app.get('/*', 
+app.get('/*',
   function(req, res){
     if(req.isAuthenticated()){
       res.redirect("/dashboard")
@@ -84,13 +86,13 @@ app.get('/*',
     }
   });
 
-app.post('/login', 
+app.post('/login',
   passport.authenticate('local', { failureRedirect: '/' }),
   function(req, res) {
     res.redirect('/dashboard');
   });
 
 
-app.listen(3000, () => {
-  console.log('Server is running on http://localhost:3000 or http://127.0.0.1:3000');
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT} or http://127.0.0.1:${PORT}`);
 });
