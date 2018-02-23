@@ -42,6 +42,7 @@
   },
   "scripts": {
     "start": "nodemon --use_strict ./src/server.js",
-    "bundle": "webpack"
+    "bundle": "webpack",
+    "bundle-dev": "webpack --watch"
   }
 }
