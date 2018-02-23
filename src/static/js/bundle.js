@@ -4976,9 +4976,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 		module.exports = classNames;
 	} else if (true) {
 		// register as 'classnames', consistent with npm package name
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
 			return classNames;
-		}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	} else {
 		window.classNames = classNames;
@@ -44734,7 +44734,7 @@ var _FAQPage = __webpack_require__(331);
 
 var _FAQPage2 = _interopRequireDefault(_FAQPage);
 
-var _ActivitiesPage = __webpack_require__(401);
+var _ActivitiesPage = __webpack_require__(389);
 
 var _ActivitiesPage2 = _interopRequireDefault(_ActivitiesPage);
 
@@ -54995,9 +54995,9 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*!
 	};
 
 	if (true) {
-		!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+		!(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
 			return ExecutionEnvironment;
-		}.call(exports, __webpack_require__, exports, module),
+		}).call(exports, __webpack_require__, exports, module),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	} else if (typeof module !== 'undefined' && module.exports) {
 		module.exports = ExecutionEnvironment;
@@ -56540,9 +56540,9 @@ var saveAs = saveAs || function (view) {
 if (typeof module !== "undefined" && module.exports) {
 	module.exports.saveAs = saveAs;
 } else if ("function" !== "undefined" && __webpack_require__(365) !== null && __webpack_require__(366) !== null) {
-	!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+	!(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
 		return saveAs;
-	}.call(exports, __webpack_require__, exports, module),
+	}).call(exports, __webpack_require__, exports, module),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 }
 ;
@@ -58005,7 +58005,326 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 389 */,
+/* 389 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(7);
+
+var _reactBootstrapTable = __webpack_require__(97);
+
+var _reactDatetime = __webpack_require__(390);
+
+var _reactDatetime2 = _interopRequireDefault(_reactDatetime);
+
+var _moment = __webpack_require__(0);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _Activities_utils = __webpack_require__(399);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var createDateEditor = function createDateEditor(onUpdate, props) {
+  return _react2.default.createElement(DateEditor, _extends({ onUpdate: onUpdate }, props));
+};
+
+var DateEditor = function (_Component) {
+  _inherits(DateEditor, _Component);
+
+  function DateEditor(props) {
+    _classCallCheck(this, DateEditor);
+
+    var _this = _possibleConstructorReturn(this, (DateEditor.__proto__ || Object.getPrototypeOf(DateEditor)).call(this, props));
+
+    _this.updateData = _this.updateData.bind(_this);
+    _this.handleClick = _this.handleClick.bind(_this);
+    _this.handleDateTimeChange = _this.handleDateTimeChange(_this);
+    _this.state = {
+      date: props.defaultValue,
+      open: true
+    };
+    return _this;
+  }
+
+  _createClass(DateEditor, [{
+    key: 'focus',
+    value: function focus() {
+      this.refs.dateTimeRef.open = !this.refs.dateTimeRef.open;
+    }
+  }, {
+    key: 'updateData',
+    value: function updateData() {
+      this.props.onUpdate(this.state.date);
+    }
+  }, {
+    key: 'handleClick',
+    value: function handleClick() {
+      this.setState({ backgroundColor: 'red' });
+    }
+  }, {
+    key: 'handleDateTimeChange',
+    value: function handleDateTimeChange(e) {
+      if (e.target) {
+        this.setState({ date: e.target.value });
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var fadeIn = this.state.open ? 'in' : '';
+      var display = this.state.open ? 'block' : 'none';
+      //style={ { display: 'inline', width: '50%' } }
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement('link', { rel: 'stylesheet', href: 'https://unpkg.com/react-datetime@2.11.0/css/react-datetime.css' }),
+        _react2.default.createElement(
+          'div',
+          { className: 'modal fade ' + fadeIn, id: 'myModal', role: 'dialog', style: { display: display } },
+          _react2.default.createElement(
+            'div',
+            { className: 'modal-dialog' },
+            _react2.default.createElement(
+              'div',
+              { className: 'modal-content' },
+              _react2.default.createElement(
+                'div',
+                { className: 'modal-body' },
+                _react2.default.createElement(_reactDatetime2.default, {
+                  ref: 'dateTimeRef',
+                  value: this.state.date,
+                  input: true,
+                  style: { display: 'block', width: '500px' },
+                  defaultValue: (0, _moment2.default)(),
+                  onChange: function onChange(e) {
+                    _this2.setState({ date: e });
+                  }
+                })
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'modal-footer' },
+                _react2.default.createElement(
+                  'button',
+                  { type: 'button', className: 'btn btn-primary', onClick: this.updateData },
+                  'Save'
+                ),
+                _react2.default.createElement(
+                  'button',
+                  { type: 'button', className: 'btn btn-default', onClick: this.close },
+                  'Close'
+                )
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return DateEditor;
+}(_react.Component);
+
+var Activities = function (_Component2) {
+  _inherits(Activities, _Component2);
+
+  function Activities(props) {
+    _classCallCheck(this, Activities);
+
+    var _this3 = _possibleConstructorReturn(this, (Activities.__proto__ || Object.getPrototypeOf(Activities)).call(this, props));
+
+    _this3.setTableData = _this3.setTableData.bind(_this3);
+    _this3.onAddRow = _this3.onAddRow.bind(_this3);
+    _this3.onDeleteRow = _this3.onDeleteRow.bind(_this3);
+    _this3.beforeSaveCell = _this3.beforeSaveCell.bind(_this3);
+
+    _this3.state = {
+      tableData: [{
+        id: 0,
+        createdAt: (0, _moment2.default)(),
+        title: "Water Games",
+        description: "It's fun",
+        startTime: (0, _moment2.default)(),
+        endTime: (0, _moment2.default)(),
+        station: "MC",
+        grade: 3
+      }, {
+        id: 2,
+        createdAt: (0, _moment2.default)(),
+        title: "Dinosaur Excavation",
+        description: "Come be a paleontologist for a day. Excavate dinosaur fossils!",
+        startTime: (0, _moment2.default)(),
+        endTime: (0, _moment2.default)(),
+        station: "Museum",
+        grade: 2
+      }]
+    };
+    return _this3;
+  }
+
+  _createClass(Activities, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this4 = this;
+
+      //e.preventDefault()
+      var activitiesPromise = (0, _Activities_utils.getAllActivities)();
+      activitiesPromise.then(function (response) {
+        if (response.data) {
+          _this4.setTableData(response.data);
+        }
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+  }, {
+    key: 'setTableData',
+    value: function setTableData(responseData) {
+      this.setState({ tableData: responseData });
+    }
+  }, {
+    key: 'onAddRow',
+    value: function onAddRow(row) {
+      if (row && row.title != "" && row.description != "" && row.grade != "" && row.station) {
+        (0, _Activities_utils.handleInsertActivities)(row);
+      } else {
+        alert("Please fill out all fields");
+      }
+    }
+  }, {
+    key: 'onDeleteRow',
+    value: function onDeleteRow(activityIDs) {
+      if (activityIDs) {
+        (0, _Activities_utils.handleDeleteActivities)(activityIDs);
+      }
+    }
+  }, {
+    key: 'beforeSaveCell',
+    value: function beforeSaveCell(row, cellName, cellValue) {
+      if (row.hasOwnProperty("id") && cellValue != "") {
+        row[cellName] = cellValue;
+        (0, _Activities_utils.handleEditActivities)(row);
+      } else {
+        alert("Please don't leave a field blank");
+        return false;
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      if (this.state.tableData.length !== 0) {
+        var inputFieldStyle = {
+          width: "100%"
+        };
+
+        var options = {
+          onDeleteRow: this.onDeleteRow,
+          onAddRow: this.onAddRow
+        };
+        var cellEdit = {
+          mode: 'click', // click cell to edit
+          beforeSaveCell: this.beforeSaveCell,
+          blurToSave: true
+        };
+        var selectRow = {
+          mode: 'checkbox' //radio or checkbox
+        };
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement('link', { rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css' }),
+          _react2.default.createElement('link', { rel: 'stylesheet', href: 'https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css' }),
+          _react2.default.createElement(
+            'h3',
+            null,
+            ' Activities '
+          ),
+          _react2.default.createElement(
+            _reactBootstrapTable.BootstrapTable,
+            {
+              data: this.state.tableData,
+              insertRow: true,
+              deleteRow: true,
+              cellEdit: cellEdit,
+              selectRow: selectRow,
+              striped: true,
+              hover: true,
+              condensed: true,
+              pagination: true,
+              options: options
+            },
+            _react2.default.createElement(
+              _reactBootstrapTable.TableHeaderColumn,
+              { dataField: 'id', dataSort: true, isKey: true, hidden: true, hiddenOnInsert: true },
+              'ID'
+            ),
+            _react2.default.createElement(
+              _reactBootstrapTable.TableHeaderColumn,
+              { dataField: 'title' },
+              'Title'
+            ),
+            _react2.default.createElement(
+              _reactBootstrapTable.TableHeaderColumn,
+              { dataField: 'description' },
+              'Description'
+            ),
+            _react2.default.createElement(
+              _reactBootstrapTable.TableHeaderColumn,
+              { dataField: 'startTime', dataFormat: _Activities_utils.dateFormatter, customEditor: { getElement: createDateEditor } },
+              'Start Time'
+            ),
+            _react2.default.createElement(
+              _reactBootstrapTable.TableHeaderColumn,
+              { dataField: 'endTime', dataFormat: _Activities_utils.dateFormatter, customEditor: { getElement: createDateEditor } },
+              'End Time'
+            ),
+            _react2.default.createElement(
+              _reactBootstrapTable.TableHeaderColumn,
+              { dataField: 'station' },
+              'Station'
+            ),
+            _react2.default.createElement(
+              _reactBootstrapTable.TableHeaderColumn,
+              { dataField: 'grade' },
+              'Grade'
+            )
+          )
+        );
+      } else {
+        return null;
+      }
+    }
+  }]);
+
+  return Activities;
+}(_react.Component);
+
+exports.default = Activities;
+
+/***/ }),
 /* 390 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -60279,7 +60598,76 @@ module.exports = DateTimePickerTime;
 
 
 /***/ }),
-/* 399 */,
+/* 399 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getAllActivities = getAllActivities;
+exports.handleEditActivities = handleEditActivities;
+exports.handleDeleteActivities = handleDeleteActivities;
+exports.handleInsertActivities = handleInsertActivities;
+exports.dateFormatter = dateFormatter;
+
+var _axios = __webpack_require__(117);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _moment = __webpack_require__(0);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var URL = 'https://water-fest.herokuapp.com';
+
+function getAllActivities() {
+  return (0, _axios2.default)({
+    method: "get",
+    url: URL + '/activities/list/'
+  });
+}
+
+function handleEditActivities(activity) {
+  (0, _axios2.default)({
+    method: "put",
+    url: URL + '/activities/edit/',
+    data: activity
+  }).then(function (response) {}).catch(function (error) {
+    console.log(error);
+  });
+}
+function handleDeleteActivities(activityIDs) {
+  (0, _axios2.default)({
+    method: "delete",
+    url: URL + '/activities/delete/',
+    data: {
+      activityIDs: activityIDs
+    }
+  }).then(function (response) {}).catch(function (error) {
+    console.log(error);
+  });
+}
+function handleInsertActivities(activity) {
+  (0, _axios2.default)({
+    method: "put",
+    url: URL + '/activities/insert/',
+    data: activity
+  }).then(function (response) {}).catch(function (error) {
+    console.log(error);
+  });
+}
+
+function dateFormatter(date, row) {
+  var dateTime = new Date(date);
+  return (0, _moment2.default)(dateTime).format('MMM DD, h:mm a');
+}
+
+/***/ }),
 /* 400 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -60359,396 +60747,6 @@ var Login = function (_Component) {
 }(_react.Component);
 
 exports.default = Login;
-
-/***/ }),
-/* 401 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(7);
-
-var _reactBootstrapTable = __webpack_require__(97);
-
-var _reactDatetime = __webpack_require__(390);
-
-var _reactDatetime2 = _interopRequireDefault(_reactDatetime);
-
-var _moment = __webpack_require__(0);
-
-var _moment2 = _interopRequireDefault(_moment);
-
-var _Activities_utils = __webpack_require__(402);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var createDateEditor = function createDateEditor(onUpdate, props) {
-  return _react2.default.createElement(DateEditor, _extends({ onUpdate: onUpdate }, props));
-};
-
-var DateEditor = function (_Component) {
-  _inherits(DateEditor, _Component);
-
-  function DateEditor(props) {
-    _classCallCheck(this, DateEditor);
-
-    var _this = _possibleConstructorReturn(this, (DateEditor.__proto__ || Object.getPrototypeOf(DateEditor)).call(this, props));
-
-    _this.updateData = _this.updateData.bind(_this);
-    _this.handleClick = _this.handleClick.bind(_this);
-    _this.handleDateTimeChange = _this.handleDateTimeChange(_this);
-    _this.state = {
-      date: props.defaultValue,
-      open: true
-    };
-    return _this;
-  }
-
-  _createClass(DateEditor, [{
-    key: 'focus',
-    value: function focus() {
-      this.refs.dateTimeRef.open = !this.refs.dateTimeRef.open;
-    }
-  }, {
-    key: 'updateData',
-    value: function updateData() {
-      this.props.onUpdate(this.state.date);
-    }
-  }, {
-    key: 'handleClick',
-    value: function handleClick() {
-      this.setState({ backgroundColor: 'red' });
-    }
-  }, {
-    key: 'handleDateTimeChange',
-    value: function handleDateTimeChange(e) {
-      if (e.target) {
-        this.setState({ date: e.target.value });
-      }
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
-
-      var fadeIn = this.state.open ? 'in' : '';
-      var display = this.state.open ? 'block' : 'none';
-      //style={ { display: 'inline', width: '50%' } }
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement('link', { rel: 'stylesheet', href: 'https://unpkg.com/react-datetime@2.11.0/css/react-datetime.css' }),
-        _react2.default.createElement(
-          'div',
-          { className: 'modal fade ' + fadeIn, id: 'myModal', role: 'dialog', style: { display: display } },
-          _react2.default.createElement(
-            'div',
-            { className: 'modal-dialog' },
-            _react2.default.createElement(
-              'div',
-              { className: 'modal-content' },
-              _react2.default.createElement(
-                'div',
-                { className: 'modal-body' },
-                _react2.default.createElement(_reactDatetime2.default, {
-                  ref: 'dateTimeRef',
-                  value: this.state.date,
-                  input: true,
-                  style: { display: 'block', width: '500px' },
-                  defaultValue: (0, _moment2.default)(),
-                  onChange: function onChange(e) {
-                    _this2.setState({ date: e });
-                  }
-                })
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'modal-footer' },
-                _react2.default.createElement(
-                  'button',
-                  { type: 'button', className: 'btn btn-primary', onClick: this.updateData },
-                  'Save'
-                ),
-                _react2.default.createElement(
-                  'button',
-                  { type: 'button', className: 'btn btn-default', onClick: this.close },
-                  'Close'
-                )
-              )
-            )
-          )
-        )
-      );
-    }
-  }]);
-
-  return DateEditor;
-}(_react.Component);
-
-var Activities = function (_Component2) {
-  _inherits(Activities, _Component2);
-
-  function Activities(props) {
-    _classCallCheck(this, Activities);
-
-    var _this3 = _possibleConstructorReturn(this, (Activities.__proto__ || Object.getPrototypeOf(Activities)).call(this, props));
-
-    _this3.setTableData = _this3.setTableData.bind(_this3);
-    _this3.onAddRow = _this3.onAddRow.bind(_this3);
-    _this3.onDeleteRow = _this3.onDeleteRow.bind(_this3);
-    _this3.beforeSaveCell = _this3.beforeSaveCell.bind(_this3);
-
-    _this3.state = {
-      tableData: [{
-        id: 0,
-        createdAt: (0, _moment2.default)(),
-        title: "Water Games",
-        description: "It's fun",
-        startTime: (0, _moment2.default)(),
-        endTime: (0, _moment2.default)(),
-        station: "MC",
-        grade: 3
-      }, {
-        id: 2,
-        createdAt: (0, _moment2.default)(),
-        title: "Dinosaur Excavation",
-        description: "Come be a paleontologist for a day. Excavate dinosaur fossils!",
-        startTime: (0, _moment2.default)(),
-        endTime: (0, _moment2.default)(),
-        station: "Museum",
-        grade: 2
-      }]
-    };
-    return _this3;
-  }
-
-  _createClass(Activities, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this4 = this;
-
-      //e.preventDefault()
-      var activitiesPromise = (0, _Activities_utils.getAllActivities)();
-      activitiesPromise.then(function (response) {
-        if (response.data) {
-          _this4.setTableData(response.data);
-        }
-      }).catch(function (error) {
-        console.log(error);
-      });
-    }
-  }, {
-    key: 'setTableData',
-    value: function setTableData(responseData) {
-      this.setState({ tableData: responseData });
-    }
-  }, {
-    key: 'onAddRow',
-    value: function onAddRow(row) {
-      if (row && row.title != "" && row.description != "" && row.grade != "" && row.station) {
-        (0, _Activities_utils.handleInsertActivities)(row);
-      } else {
-        alert("Please fill out all fields");
-      }
-    }
-  }, {
-    key: 'onDeleteRow',
-    value: function onDeleteRow(activityIDs) {
-      if (activityIDs) {
-        (0, _Activities_utils.handleDeleteActivities)(activityIDs);
-      }
-    }
-  }, {
-    key: 'beforeSaveCell',
-    value: function beforeSaveCell(row, cellName, cellValue) {
-      if (row.hasOwnProperty("id") && cellValue != "") {
-        row[cellName] = cellValue;
-        (0, _Activities_utils.handleEditActivities)(row);
-      } else {
-        alert("Please don't leave a field blank");
-        return false;
-      }
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      if (this.state.tableData.length !== 0) {
-        var inputFieldStyle = {
-          width: "100%"
-        };
-
-        var options = {
-          onDeleteRow: this.onDeleteRow,
-          onAddRow: this.onAddRow
-        };
-        var cellEdit = {
-          mode: 'click', // click cell to edit
-          beforeSaveCell: this.beforeSaveCell,
-          blurToSave: true
-        };
-        var selectRow = {
-          mode: 'checkbox' //radio or checkbox
-        };
-        return _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement('link', { rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css' }),
-          _react2.default.createElement('link', { rel: 'stylesheet', href: 'https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css' }),
-          _react2.default.createElement(
-            'h3',
-            null,
-            ' Activities '
-          ),
-          _react2.default.createElement(
-            _reactBootstrapTable.BootstrapTable,
-            {
-              data: this.state.tableData,
-              insertRow: true,
-              deleteRow: true,
-              cellEdit: cellEdit,
-              selectRow: selectRow,
-              striped: true,
-              hover: true,
-              condensed: true,
-              pagination: true,
-              options: options
-            },
-            _react2.default.createElement(
-              _reactBootstrapTable.TableHeaderColumn,
-              { dataField: 'id', dataSort: true, isKey: true, hidden: true, hiddenOnInsert: true },
-              'ID'
-            ),
-            _react2.default.createElement(
-              _reactBootstrapTable.TableHeaderColumn,
-              { dataField: 'title' },
-              'Title'
-            ),
-            _react2.default.createElement(
-              _reactBootstrapTable.TableHeaderColumn,
-              { dataField: 'description' },
-              'Description'
-            ),
-            _react2.default.createElement(
-              _reactBootstrapTable.TableHeaderColumn,
-              { dataField: 'startTime', dataFormat: _Activities_utils.dateFormatter, customEditor: { getElement: createDateEditor } },
-              'Start Time'
-            ),
-            _react2.default.createElement(
-              _reactBootstrapTable.TableHeaderColumn,
-              { dataField: 'endTime', dataFormat: _Activities_utils.dateFormatter, customEditor: { getElement: createDateEditor } },
-              'End Time'
-            ),
-            _react2.default.createElement(
-              _reactBootstrapTable.TableHeaderColumn,
-              { dataField: 'station' },
-              'Station'
-            ),
-            _react2.default.createElement(
-              _reactBootstrapTable.TableHeaderColumn,
-              { dataField: 'grade' },
-              'Grade'
-            )
-          )
-        );
-      } else {
-        return null;
-      }
-    }
-  }]);
-
-  return Activities;
-}(_react.Component);
-
-exports.default = Activities;
-
-/***/ }),
-/* 402 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.getAllActivities = getAllActivities;
-exports.handleEditActivities = handleEditActivities;
-exports.handleDeleteActivities = handleDeleteActivities;
-exports.handleInsertActivities = handleInsertActivities;
-exports.dateFormatter = dateFormatter;
-
-var _axios = __webpack_require__(117);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-var _moment = __webpack_require__(0);
-
-var _moment2 = _interopRequireDefault(_moment);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var URL = 'https://water-fest.herokuapp.com';
-
-function getAllActivities() {
-  return (0, _axios2.default)({
-    method: "get",
-    url: URL + '/activities/list/'
-  });
-}
-
-function handleEditActivities(activity) {
-  (0, _axios2.default)({
-    method: "put",
-    url: URL + '/activities/edit/',
-    data: activity
-  }).then(function (response) {}).catch(function (error) {
-    console.log(error);
-  });
-}
-function handleDeleteActivities(activityIDs) {
-  (0, _axios2.default)({
-    method: "delete",
-    url: URL + '/activities/delete/',
-    data: {
-      activityIDs: activityIDs
-    }
-  }).then(function (response) {}).catch(function (error) {
-    console.log(error);
-  });
-}
-function handleInsertActivities(activity) {
-  (0, _axios2.default)({
-    method: "put",
-    url: URL + '/activities/insert/',
-    data: activity
-  }).then(function (response) {}).catch(function (error) {
-    console.log(error);
-  });
-}
-
-function dateFormatter(date, row) {
-  var dateTime = new Date(date);
-  return (0, _moment2.default)(dateTime).format('MMM DD, h:mm a');
-}
 
 /***/ })
 /******/ ]);

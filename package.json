@@ -30,16 +30,13 @@
     "react-bootstrap-table": "^4.1.4",
     "react-datetime": "^2.11.0",
     "react-dom": "^16.1.1",
-    "react-router-dom": "^4.2.2"
-  },
-  "devDependencies": {
+    "react-router-dom": "^4.2.2",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
-    "babel-preset-env": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-react-native": "^4.0.0",
     "nodemon": "^1.12.1",
-    "webpack": "^3.8.1"
+    "webpack": "^3.11.0"
   },
   "scripts": {
     "start": "nodemon --use_strict ./src/server.js",

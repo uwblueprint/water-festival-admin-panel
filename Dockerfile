@@ -9,7 +9,8 @@ COPY . /usr/src/app/
 
 RUN apk add git --update-cache && \
     npm update && \
-    npm install
+    npm install && \
+    npm run bundle
 
-EXPOSE 9090
-CMD [ "node", "app.js" ]
+EXPOSE 3000
+CMD [ "npm", "start"]
