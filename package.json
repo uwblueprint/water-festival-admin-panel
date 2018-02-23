@@ -45,6 +45,6 @@
     "bundle": "webpack",
 		"bundle-dev": "webpack --watch",
 		"heroku-prebuild": "webpack",
-    "heroku-postbuild": "nodemon --usestrict ./src/server.js"
+    "heroku-postbuild": "nodemon --use_strict ./src/server.js"
   }
 }
