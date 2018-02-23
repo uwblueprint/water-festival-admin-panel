@@ -44,6 +44,6 @@
     "start": "nodemon --use_strict ./src/server.js",
     "bundle": "webpack",
 		"bundle-dev": "webpack --watch",
-		"heroku-prebuild": "webpack -p --config ./webpack.config.js --progress"
+		"heroku-postbuild": "webpack -p --config ./webpack.config.js --progress"
   }
 }
