@@ -1,2 +1,4 @@
 .DS_STORE
 node_modules
+# Ignore Webpack. Needs to be built, not deployed
+/src/static/js
