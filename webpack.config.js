@@ -22,7 +22,12 @@ module.exports = {
       query: {
         presets: ["react", "env"]
       }
-    }],
+    },
+    {
+			test: /\.css$/,
+			use: [ 'style-loader', 'css-loader' ]
+    }
+    ],
   } 
 
   // start Webpack in a watch mode, so Webpack will rebuild the bundle on changes

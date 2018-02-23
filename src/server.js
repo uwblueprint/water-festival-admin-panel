@@ -74,6 +74,7 @@ app.get('/logout',
 app.get('/dashboard',
   require('connect-ensure-login').ensureLoggedIn("/"),
   function(req, res){
+    console.log("HIT2")
     res.sendFile(__dirname+'/static/view.html')
   });
 
@@ -89,6 +90,7 @@ app.get('/*',
 app.post('/login',
   passport.authenticate('local', { failureRedirect: '/' }),
   function(req, res) {
+    console.log("HIT 1")
     res.redirect('/dashboard');
   });
 

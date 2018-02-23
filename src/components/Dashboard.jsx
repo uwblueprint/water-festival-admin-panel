@@ -50,4 +50,3 @@ class App extends Component {
 }
 
 export default App;
-//React.render(<App />, document.getElementById('react-app'));
