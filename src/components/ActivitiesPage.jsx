@@ -180,6 +180,7 @@ class Activities extends Component {
             <TableHeaderColumn dataField='description'>Description</TableHeaderColumn>
             <TableHeaderColumn dataField='startTime' dataFormat={ dateFormatter } customEditor={ { getElement: createDateEditor } }>Start Time</TableHeaderColumn>
             <TableHeaderColumn dataField='endTime' dataFormat={ dateFormatter } customEditor={ { getElement: createDateEditor } }>End Time</TableHeaderColumn>
+            <TableHeaderColumn dataField='imageURI'>Image</TableHeaderColumn>
             <TableHeaderColumn dataField='station'>Station</TableHeaderColumn>
             <TableHeaderColumn dataField='grade'>Grade</TableHeaderColumn>
           </BootstrapTable>
