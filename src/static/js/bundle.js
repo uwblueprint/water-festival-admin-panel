@@ -64444,88 +64444,84 @@ var Activities = function (_Component) {
 	}, {
 		key: 'render',
 		value: function render() {
-			if (this.state.tableData.length !== 0) {
-				var options = {
-					onDeleteRow: this.onDeleteRow,
-					onAddRow: this.onAddRow
-				};
-				var cellEdit = {
-					mode: 'click', // click cell to edit
-					beforeSaveCell: this.beforeSaveCell,
-					blurToSave: true
-				};
-				var selectRow = {
-					mode: 'checkbox' //radio or checkbox
-				};
-				return _react2.default.createElement(
-					'div',
+			var options = {
+				onDeleteRow: this.onDeleteRow,
+				onAddRow: this.onAddRow
+			};
+			var cellEdit = {
+				mode: 'click', // click cell to edit
+				beforeSaveCell: this.beforeSaveCell,
+				blurToSave: true
+			};
+			var selectRow = {
+				mode: 'checkbox' //radio or checkbox
+			};
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement('link', { rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css' }),
+				_react2.default.createElement('link', { rel: 'stylesheet', href: 'https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css' }),
+				_react2.default.createElement(
+					'h3',
 					null,
-					_react2.default.createElement('link', { rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css' }),
-					_react2.default.createElement('link', { rel: 'stylesheet', href: 'https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css' }),
+					' Activities '
+				),
+				_react2.default.createElement(
+					_reactBootstrapTable.BootstrapTable,
+					{
+						data: this.state.tableData,
+						insertRow: true,
+						deleteRow: true,
+						cellEdit: cellEdit,
+						selectRow: selectRow,
+						striped: true,
+						hover: true,
+						condensed: true,
+						pagination: true,
+						options: options
+					},
 					_react2.default.createElement(
-						'h3',
-						null,
-						' Activities '
+						_reactBootstrapTable.TableHeaderColumn,
+						{ dataField: 'id', dataSort: true, isKey: true, hidden: true, hiddenOnInsert: true },
+						'ID'
 					),
 					_react2.default.createElement(
-						_reactBootstrapTable.BootstrapTable,
-						{
-							data: this.state.tableData,
-							insertRow: true,
-							deleteRow: true,
-							cellEdit: cellEdit,
-							selectRow: selectRow,
-							striped: true,
-							hover: true,
-							condensed: true,
-							pagination: true,
-							options: options
-						},
-						_react2.default.createElement(
-							_reactBootstrapTable.TableHeaderColumn,
-							{ dataField: 'id', dataSort: true, isKey: true, hidden: true, hiddenOnInsert: true },
-							'ID'
-						),
-						_react2.default.createElement(
-							_reactBootstrapTable.TableHeaderColumn,
-							{ dataField: 'title' },
-							'Title'
-						),
-						_react2.default.createElement(
-							_reactBootstrapTable.TableHeaderColumn,
-							{ dataField: 'description' },
-							'Description'
-						),
-						_react2.default.createElement(
-							_reactBootstrapTable.TableHeaderColumn,
-							{ dataField: 'station', width: '70' },
-							'Station'
-						),
-						_react2.default.createElement(
-							_reactBootstrapTable.TableHeaderColumn,
-							{ dataField: 'grade', width: '80' },
-							'Grade'
-						),
-						_react2.default.createElement(
-							_reactBootstrapTable.TableHeaderColumn,
-							{ dataField: 'isNewActivity', width: '90' },
-							'Is New?'
-						),
-						_react2.default.createElement(
-							_reactBootstrapTable.TableHeaderColumn,
-							{ dataField: 'isOpen', width: '80' },
-							'Open?'
-						),
-						_react2.default.createElement(
-							_reactBootstrapTable.TableHeaderColumn,
-							{ dataField: 'state' },
-							'State'
-						)
+						_reactBootstrapTable.TableHeaderColumn,
+						{ dataField: 'title' },
+						'Title'
+					),
+					_react2.default.createElement(
+						_reactBootstrapTable.TableHeaderColumn,
+						{ dataField: 'description' },
+						'Description'
+					),
+					_react2.default.createElement(
+						_reactBootstrapTable.TableHeaderColumn,
+						{ dataField: 'station', width: '70' },
+						'Station'
+					),
+					_react2.default.createElement(
+						_reactBootstrapTable.TableHeaderColumn,
+						{ dataField: 'grade', width: '80' },
+						'Grade'
+					),
+					_react2.default.createElement(
+						_reactBootstrapTable.TableHeaderColumn,
+						{ dataField: 'isNewActivity', width: '90' },
+						'Is New?'
+					),
+					_react2.default.createElement(
+						_reactBootstrapTable.TableHeaderColumn,
+						{ dataField: 'isOpen', width: '80' },
+						'Open?'
+					),
+					_react2.default.createElement(
+						_reactBootstrapTable.TableHeaderColumn,
+						{ dataField: 'state' },
+						'State'
 					)
-				);
-			} else {
-				return null;
-			}
+				)
+			);
 		}
 	}]);
 
