@@ -40,12 +40,52 @@ class Activities extends Component {
 		this.setState({ tableData: responseData })
 	}
 
-	onAddRow(row) {
-		if (row && row.title != "" && row.description!= "" && row.grade != "" && row.station) {
-			handleInsertActivities(row);
-		} else {
-			alert("Please fill out all fields")
+	validateData(row, cellName, cellValue) {
+		if (!row.hasOwnProperty('id')) {
+			alert('Invalid row');
+			return false;
+		} else if (cellName === 'station' && isNaN(cellValue)) {
+			alert('Station has to be a valid number');
+			return false;
+		} else if (cellName === 'grade' && isNaN(cellValue) && !Array.isArray(cellValue) && cellValue.indexOf(',') < 0) {
+			alert('Grade has to be a number or a comma-separated list of numbers');
+			return false;
+		} else if ((cellName === 'isNewActivity' || cellName === 'isOpen') && cellValue.toLowerCase() !== 'true' && cellValue.toLowerCase() !== 'false') {
+			alert('Invalid boolean value. Has to be "true" or "false"');
+			return false;
+		} else if (cellName === 'title' && cellValue === '') {
+			alert('Title cannot be empty');
+			return false;
 		}
+
+		return true;
+	}
+
+	onAddRow(row) {
+		let isValid = true;
+		Object.keys(row).every(name => {
+			if (!this.validateData(row, name, row[name])) {
+				isValid = false;
+				return false;
+			} else return true;
+		});
+
+		let { station, grade, isNewActivity, isOpen } = row;
+		station = Number(station);
+		if (grade.slice(-1) === ',') grade = grade.slice(0, -1);
+		grade = grade.split(",").map(s => Number(s));
+		isNewActivity = Boolean(isNewActivity);
+		isOpen = Boolean(isOpen);
+
+		const newRow = Object.assign({}, row, {
+			id: null,
+			station,
+			grade,
+			isNewActivity,
+			isOpen
+		});
+
+		if (isValid) handleInsertActivities(newRow);
 	}
 
 	onDeleteRow(activityIDs) {
@@ -55,13 +95,20 @@ class Activities extends Component {
 	}
 
 	beforeSaveCell(row, cellName, cellValue) {
-		if (row.hasOwnProperty("id") && cellValue != "") {
-			row[cellName] = cellValue;
-			handleEditActivities(row);
-		} else {
-			alert("Please don't leave a field blank");
-			return false;
+		if (!this.validateData(row, cellName, cellValue)) return false;
+		const newRow = Object.assign({}, row);
+		if (cellName === 'grade') {
+			if (cellValue.slice(-1) === ',') cellValue = cellValue.slice(0, -1);
+			const grade = cellValue.split(",").map(s => Number(s));
+			newRow['grade'] = grade;
 		}
+		if (cellName === 'station') {
+			newRow[cellName] = Number(cellValue);
+		}
+		if (cellName === 'isNewActivity' || cellName === 'isOpen') {
+			newRow[cellName] = Boolean(cellValue);
+		}
+		handleEditActivities(newRow);
 	}
 
 	render() {
@@ -102,10 +149,10 @@ class Activities extends Component {
 						<TableHeaderColumn dataField='id' dataSort isKey={ true } hidden hiddenOnInsert>ID</TableHeaderColumn>
 						<TableHeaderColumn dataField='title'>Title</TableHeaderColumn>
 						<TableHeaderColumn dataField='description'>Description</TableHeaderColumn>
-						<TableHeaderColumn dataField='station' width='60'>Station</TableHeaderColumn>
-						<TableHeaderColumn dataField='grade'>Grade</TableHeaderColumn>
-						<TableHeaderColumn dataField='isNewActivity'>Is New?</TableHeaderColumn>
-						<TableHeaderColumn dataField='isOpen'>Open?</TableHeaderColumn>
+						<TableHeaderColumn dataField='station' width='70'>Station</TableHeaderColumn>
+						<TableHeaderColumn dataField='grade' width='80'>Grade</TableHeaderColumn>
+						<TableHeaderColumn dataField='isNewActivity' width='90'>Is New?</TableHeaderColumn>
+						<TableHeaderColumn dataField='isOpen' width='80'>Open?</TableHeaderColumn>
 						<TableHeaderColumn dataField='state'>State</TableHeaderColumn>
 					</BootstrapTable>
 				</div>

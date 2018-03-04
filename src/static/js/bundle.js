@@ -64359,13 +64359,62 @@ var Activities = function (_Component) {
 			this.setState({ tableData: responseData });
 		}
 	}, {
+		key: 'validateData',
+		value: function validateData(row, cellName, cellValue) {
+			if (!row.hasOwnProperty('id')) {
+				alert('Invalid row');
+				return false;
+			} else if (cellName === 'station' && isNaN(cellValue)) {
+				alert('Station has to be a valid number');
+				return false;
+			} else if (cellName === 'grade' && isNaN(cellValue) && !Array.isArray(cellValue) && cellValue.indexOf(',') < 0) {
+				alert('Grade has to be a number or a comma-separated list of numbers');
+				return false;
+			} else if ((cellName === 'isNewActivity' || cellName === 'isOpen') && cellValue.toLowerCase() !== 'true' && cellValue.toLowerCase() !== 'false') {
+				alert('Invalid boolean value. Has to be "true" or "false"');
+				return false;
+			} else if (cellName === 'title' && cellValue === '') {
+				alert('Title cannot be empty');
+				return false;
+			}
+
+			return true;
+		}
+	}, {
 		key: 'onAddRow',
 		value: function onAddRow(row) {
-			if (row && row.title != "" && row.description != "" && row.grade != "" && row.station) {
-				(0, _Activities_utils.handleInsertActivities)(row);
-			} else {
-				alert("Please fill out all fields");
-			}
+			var _this3 = this;
+
+			var isValid = true;
+			Object.keys(row).every(function (name) {
+				if (!_this3.validateData(row, name, row[name])) {
+					isValid = false;
+					return false;
+				} else return true;
+			});
+
+			var station = row.station,
+			    grade = row.grade,
+			    isNewActivity = row.isNewActivity,
+			    isOpen = row.isOpen;
+
+			station = Number(station);
+			if (grade.slice(-1) === ',') grade = grade.slice(0, -1);
+			grade = grade.split(",").map(function (s) {
+				return Number(s);
+			});
+			isNewActivity = Boolean(isNewActivity);
+			isOpen = Boolean(isOpen);
+
+			var newRow = Object.assign({}, row, {
+				id: null,
+				station: station,
+				grade: grade,
+				isNewActivity: isNewActivity,
+				isOpen: isOpen
+			});
+
+			if (isValid) (0, _Activities_utils.handleInsertActivities)(newRow);
 		}
 	}, {
 		key: 'onDeleteRow',
@@ -64377,13 +64426,22 @@ var Activities = function (_Component) {
 	}, {
 		key: 'beforeSaveCell',
 		value: function beforeSaveCell(row, cellName, cellValue) {
-			if (row.hasOwnProperty("id") && cellValue != "") {
-				row[cellName] = cellValue;
-				(0, _Activities_utils.handleEditActivities)(row);
-			} else {
-				alert("Please don't leave a field blank");
-				return false;
+			if (!this.validateData(row, cellName, cellValue)) return false;
+			var newRow = Object.assign({}, row);
+			if (cellName === 'grade') {
+				if (cellValue.slice(-1) === ',') cellValue = cellValue.slice(0, -1);
+				var grade = cellValue.split(",").map(function (s) {
+					return Number(s);
+				});
+				newRow['grade'] = grade;
 			}
+			if (cellName === 'station') {
+				newRow[cellName] = Number(cellValue);
+			}
+			if (cellName === 'isNewActivity' || cellName === 'isOpen') {
+				newRow[cellName] = Boolean(cellValue);
+			}
+			(0, _Activities_utils.handleEditActivities)(newRow);
 		}
 	}, {
 		key: 'render',
@@ -64446,22 +64504,22 @@ var Activities = function (_Component) {
 						),
 						_react2.default.createElement(
 							_reactBootstrapTable.TableHeaderColumn,
-							{ dataField: 'station', width: '60' },
+							{ dataField: 'station', width: '70' },
 							'Station'
 						),
 						_react2.default.createElement(
 							_reactBootstrapTable.TableHeaderColumn,
-							{ dataField: 'grade' },
+							{ dataField: 'grade', width: '80' },
 							'Grade'
 						),
 						_react2.default.createElement(
 							_reactBootstrapTable.TableHeaderColumn,
-							{ dataField: 'isNewActivity' },
+							{ dataField: 'isNewActivity', width: '90' },
 							'Is New?'
 						),
 						_react2.default.createElement(
 							_reactBootstrapTable.TableHeaderColumn,
-							{ dataField: 'isOpen' },
+							{ dataField: 'isOpen', width: '80' },
 							'Open?'
 						),
 						_react2.default.createElement(
@@ -66790,35 +66848,13 @@ function getAllActivities() {
 }
 
 function handleEditActivities(activity) {
-	var id = activity.id,
-	    title = activity.title,
-	    description = activity.description,
-	    grade = activity.grade,
-	    imageURI = activity.imageURI,
-	    isNewActivity = activity.isNewActivity,
-	    isOpen = activity.isOpen,
-	    state = activity.state,
-	    station = activity.station;
-
-
 	(0, _axios2.default)({
 		method: "put",
 		url: URL + '/activities/edit/',
-		data: {
-			id: id,
-			title: title,
-			description: description,
-			grade: grade.split(",").map(function (s) {
-				return Number(s);
-			}),
-			imageURI: imageURI,
-			isNewActivity: isNewActivity,
-			isOpen: isOpen,
-			state: state,
-			station: station
-		}
+		data: activity
 	}).then(function (response) {}).catch(function (error) {
 		console.log(error);
+		alert('Failed to edit activity');
 	});
 }
 function handleDeleteActivities(activityIDs) {
@@ -66830,6 +66866,7 @@ function handleDeleteActivities(activityIDs) {
 		}
 	}).then(function (response) {}).catch(function (error) {
 		console.log(error);
+		alert('Failed to delete activity');
 	});
 }
 function handleInsertActivities(activity) {
@@ -66839,6 +66876,7 @@ function handleInsertActivities(activity) {
 		data: activity
 	}).then(function (response) {}).catch(function (error) {
 		console.log(error);
+		alert('Failed to insert activity');
 	});
 }
 

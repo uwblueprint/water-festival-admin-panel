@@ -11,35 +11,14 @@ export function getAllActivities() {
 }
 
 export function handleEditActivities(activity) {
-	const {
-		id,
-		title,
-		description,
-		grade,
-		imageURI,
-		isNewActivity,
-		isOpen,
-		state,
-		station
-	} = activity;
-
 	axios({
 		method: "put",
 		url: `${URL}/activities/edit/`,
-		data: {
-			id,
-			title,
-			description,
-			grade: grade.split(",").map(s => Number(s)),
-			imageURI,
-			isNewActivity,
-			isOpen,
-			state,
-			station
-		}
+		data: activity
 	}).then(response => {
 	}).catch(function (error) {
 		console.log(error);
+		alert('Failed to edit activity');
 	});
 }
 export function handleDeleteActivities(activityIDs) {
@@ -52,6 +31,7 @@ export function handleDeleteActivities(activityIDs) {
 	}).then(response => {
 	}).catch(function (error) {
 		console.log(error);
+		alert('Failed to delete activity');
 	});
 }
 export function handleInsertActivities(activity) {
@@ -62,5 +42,6 @@ export function handleInsertActivities(activity) {
   }).then(response => {
   }).catch(function (error) {
     console.log(error);
+		alert('Failed to insert activity');
   });
 }
