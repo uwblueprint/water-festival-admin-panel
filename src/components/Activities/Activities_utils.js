@@ -1,5 +1,4 @@
 import axios from 'axios';
-import moment from 'moment';
 
 const URL = 'https://water-fest.herokuapp.com';
 
