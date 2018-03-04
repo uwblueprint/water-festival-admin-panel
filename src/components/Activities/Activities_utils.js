@@ -4,33 +4,35 @@ import moment from 'moment';
 const URL = 'https://water-fest.herokuapp.com';
 
 export function getAllActivities() {
-    return axios({
+		return axios({
 			method: "get",
-      url: `${URL}/activities/list/`
-    })
+			url: `${URL}/activities/list/`
+		})
 }
 
 export function handleEditActivities(activity) {
-  axios({
-    method: "put",
-    url: `${URL}/activities/edit/`,
-    data: activity
-  }).then(response => {
-  }).catch(function (error) {
-    console.log(error);
-  });
+	axios({
+		method: "put",
+		url: `${URL}/activities/edit/`,
+		data: activity
+	}).then(response => {
+	}).catch(function (error) {
+		console.log(error);
+		alert('Failed to edit activity');
+	});
 }
 export function handleDeleteActivities(activityIDs) {
-  axios({
-    method: "delete",
-    url: `${URL}/activities/delete/`,
-    data: {
-      activityIDs: activityIDs
-    }
-  }).then(response => {
-  }).catch(function (error) {
-    console.log(error);
-  });
+	axios({
+		method: "delete",
+		url: `${URL}/activities/delete/`,
+		data: {
+			activityIDs
+		}
+	}).then(response => {
+	}).catch(function (error) {
+		console.log(error);
+		alert('Failed to delete activity');
+	});
 }
 export function handleInsertActivities(activity) {
   axios({
@@ -40,5 +42,6 @@ export function handleInsertActivities(activity) {
   }).then(response => {
   }).catch(function (error) {
     console.log(error);
+		alert('Failed to insert activity');
   });
 }
