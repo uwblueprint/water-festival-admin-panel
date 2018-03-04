@@ -64343,9 +64343,7 @@ var Activities = function (_Component) {
 		value: function componentDidMount() {
 			var _this2 = this;
 
-			//e.preventDefault()
-			var activitiesPromise = (0, _Activities_utils.getAllActivities)();
-			activitiesPromise.then(function (response) {
+			(0, _Activities_utils.getAllActivities)().then(function (response) {
 				if (response.data) {
 					_this2.setTableData(response.data);
 				}
@@ -64447,10 +64445,6 @@ var Activities = function (_Component) {
 		key: 'render',
 		value: function render() {
 			if (this.state.tableData.length !== 0) {
-				var inputFieldStyle = {
-					width: "100%"
-				};
-
 				var options = {
 					onDeleteRow: this.onDeleteRow,
 					onAddRow: this.onAddRow

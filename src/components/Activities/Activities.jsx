@@ -24,9 +24,7 @@ class Activities extends Component {
 	}
 
 	componentDidMount() {
-		//e.preventDefault()
-		var activitiesPromise = getAllActivities();
-		activitiesPromise.then(response => {
+		getAllActivities().then(response => {
 			if (response.data) {
 				this.setTableData(response.data);
 			}
@@ -113,10 +111,6 @@ class Activities extends Component {
 
 	render() {
 		if (this.state.tableData.length !== 0) {
-			const inputFieldStyle = {
-				width: "100%"
-			};
-
 			const options = {
 				onDeleteRow: this.onDeleteRow,
 				onAddRow: this.onAddRow
