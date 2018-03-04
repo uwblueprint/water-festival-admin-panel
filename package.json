@@ -43,7 +43,7 @@
   "scripts": {
     "start": "nodemon --use_strict ./src/server.js",
     "bundle": "webpack",
-		"bundle-dev": "webpack --watch",
-		"heroku-postbuild": "webpack -p --config ./webpack.config.js --progress"
+    "bundle-dev": "webpack --watch",
+    "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress"
   }
 }

@@ -19,6 +19,7 @@ export function handleQuestionEdit(faq) {
     console.log(error);
   });
 }
+
 export function handleDeleteQuestions(faqIDs) {
   axios({
     method: "delete",
@@ -31,10 +32,12 @@ export function handleDeleteQuestions(faqIDs) {
     console.log(error);
   });
 }
+
 export function handleInsertQuestion(faq) {
+  console.log(faq)
   axios({
-    method: "put",
-    url: `${URL}/faq/insert/`,
+    method: "post",
+    url: `${URL}/faq/insert`,
     data: faq
   }).then(response => {
   }).catch(function (error) {
