@@ -26,7 +26,7 @@ export function handleDeleteActivities(activityIDs) {
 		method: "delete",
 		url: `${URL}/activities/delete/`,
 		data: {
-			activityIDs: activityIDs
+			activityIDs
 		}
 	}).then(response => {
 	}).catch(function (error) {
