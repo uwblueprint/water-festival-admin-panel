@@ -79,48 +79,44 @@ class FAQ extends Component {
   }
 
   render() {
-    if (this.state.tableData.length !== 0) {
-      const options = {
-        onDeleteRow: this.onDeleteRow,
-				onAddRow: this.onAddRow
-      };
+    const options = {
+      onDeleteRow: this.onDeleteRow,
+      onAddRow: this.onAddRow
+    };
 
-      const cellEdit = {
-        mode: 'click', // click cell to edit
-        beforeSaveCell: this.beforeSaveCell,
-        blurToSave: true
-      };
+    const cellEdit = {
+      mode: 'click', // click cell to edit
+      beforeSaveCell: this.beforeSaveCell,
+      blurToSave: true
+    };
 
-      const selectRow = {
-        mode: 'checkbox' //radio or checkbox
-      };
+    const selectRow = {
+      mode: 'checkbox' //radio or checkbox
+    };
 
-      return (
-        <div>
-          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" />
-          <link rel="stylesheet" href="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css"></link>
-          <h3> FAQ </h3>
-          <BootstrapTable
-            data={this.state.tableData}
-            insertRow
-            deleteRow
-            cellEdit={ cellEdit }
-            selectRow={ selectRow }
-            striped
-            hover
-            condensed
-            pagination
-            options={options}
-          >
-            <TableHeaderColumn dataField='id' dataSort isKey={ true } hidden hiddenOnInsert> ID </TableHeaderColumn>
-            <TableHeaderColumn dataField='question'>Question</TableHeaderColumn>
-            <TableHeaderColumn dataField='answer'>Answer</TableHeaderColumn>
-          </BootstrapTable>
-        </div>
-      );
-    }else{
-      return null;
-    }
+    return (
+      <div>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css"></link>
+        <h3> FAQ </h3>
+        <BootstrapTable
+          data={this.state.tableData}
+          insertRow
+          deleteRow
+          cellEdit={ cellEdit }
+          selectRow={ selectRow }
+          striped
+          hover
+          condensed
+          pagination
+          options={options}
+        >
+          <TableHeaderColumn dataField='id' dataSort isKey={ true } hidden hiddenOnInsert> ID </TableHeaderColumn>
+          <TableHeaderColumn dataField='question'>Question</TableHeaderColumn>
+          <TableHeaderColumn dataField='answer'>Answer</TableHeaderColumn>
+        </BootstrapTable>
+      </div>
+    );
   }
 }
 

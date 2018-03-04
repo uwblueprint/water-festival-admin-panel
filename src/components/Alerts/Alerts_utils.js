@@ -2,30 +2,30 @@ import axios from 'axios';
 
 const URL = 'https://water-fest.herokuapp.com';
 
-export function getAllQuestions() {
+export function getAllAlerts() {
     return axios({
-			method: "get",
-      url: `${URL}/faq/list/`
-    })
+        method: "get",
+        url: `${URL}/alerts/list/`
+    });
 }
 
-export function handleQuestionEdit(faq) {
+export function handleAlertEdit(alert) {
   axios({
     method: "put",
-    url: `${URL}/faq/edit/`,
-    data: faq
+    url: `${URL}/alerts/edit/`,
+    data: alert
   }).then(response => {
   }).catch(function (error) {
     console.log(error);
   });
 }
 
-export function handleDeleteQuestions(faqIDs) {
+export function handleDeleteAlerts(alertIDs) {
   axios({
     method: "delete",
-    url: `${URL}/faq/delete/`,
+    url: `${URL}/alerts/delete/`,
     data: {
-      faqIDs: faqIDs
+        alertIDs,
     }
   }).then(response => {
   }).catch(function (error) {
@@ -33,11 +33,11 @@ export function handleDeleteQuestions(faqIDs) {
   });
 }
 
-export function handleInsertQuestion(faq) {
+export function handleInsertAlert(alert) {
   axios({
     method: "post",
-    url: `${URL}/faq/insert`,
-    data: faq
+    url: `${URL}/alerts/insert`,
+    data: alert
   }).then(response => {
   }).catch(function (error) {
     console.log(error);
