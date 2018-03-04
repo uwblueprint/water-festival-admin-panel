@@ -4,15 +4,12 @@ import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar'
 import Button from 'react-bootstrap/lib/Button'
 import Grid from 'react-bootstrap/lib/Grid'
 import Row from 'react-bootstrap/lib/Row'
-import FAQ from './FAQPage.jsx';
-import Events from './ActivitiesPage.jsx';
+import FAQ from './FAQ/FAQ';
+import Events from './Activities/Activities'
 
 class App extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-    };
   }
 
   handleLogout() {

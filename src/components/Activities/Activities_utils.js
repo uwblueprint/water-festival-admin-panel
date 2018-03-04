@@ -34,16 +34,11 @@ export function handleDeleteActivities(activityIDs) {
 }
 export function handleInsertActivities(activity) {
   axios({
-    method: "put",
+    method: "post",
     url: `${URL}/activities/insert/`,
     data: activity
   }).then(response => {
   }).catch(function (error) {
     console.log(error);
   });
-}
-
-export function dateFormatter(date, row) {
-	const dateTime = new Date(date);
-  return(moment(dateTime).format('MMM DD, h:mm a'));
 }
