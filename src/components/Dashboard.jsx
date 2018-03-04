@@ -6,6 +6,7 @@ import Grid from 'react-bootstrap/lib/Grid'
 import Row from 'react-bootstrap/lib/Row'
 import FAQ from './FAQ/FAQ';
 import Events from './Activities/Activities'
+import Users from './Users/Users';
 
 class App extends Component {
   constructor(props) {
@@ -39,6 +40,7 @@ class App extends Component {
 					<Row className="show-grid">
               <FAQ />
               <Events />
+							<Users />
           </Row>
 				</Grid>
       </div>

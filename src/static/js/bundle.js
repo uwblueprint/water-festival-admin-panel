@@ -51126,6 +51126,10 @@ var _Activities = __webpack_require__(450);
 
 var _Activities2 = _interopRequireDefault(_Activities);
 
+var _Users = __webpack_require__(573);
+
+var _Users2 = _interopRequireDefault(_Users);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -51181,7 +51185,8 @@ var App = function (_Component) {
             _Row2.default,
             { className: 'show-grid' },
             _react2.default.createElement(_FAQ2.default, null),
-            _react2.default.createElement(_Activities2.default, null)
+            _react2.default.createElement(_Activities2.default, null),
+            _react2.default.createElement(_Users2.default, null)
           )
         )
       );
@@ -52453,8 +52458,6 @@ var _FAQ_utils = __webpack_require__(431);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -52483,44 +52486,27 @@ var FAQ = function (_Component) {
   _createClass(FAQ, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this2 = this;
-
-      var questionsPromise = (0, _FAQ_utils.getAllQuestions)();
-      questionsPromise.then(function (response) {
-        if (response.data) {
-          _this2.setTableData(response.data);
-        }
-      }).catch(function (error) {
-        console.log(error);
-      });
-    }
-  }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      var _this3 = this;
-
-      var questionsPromise = (0, _FAQ_utils.getAllQuestions)();
-      questionsPromise.then(function (response) {
-        if (response.data) {
-          _this3.setTableData(response.data);
-        }
-      }).catch(function (error) {
-        console.log(error);
-      });
+      this.setTableData();
     }
   }, {
     key: 'setTableData',
-    value: function setTableData(responseData) {
-      this.setState({ tableData: responseData });
+    value: function setTableData() {
+      var _this2 = this;
+
+      (0, _FAQ_utils.getAllQuestions)().then(function (response) {
+        if (response.data) _this2.setState({ tableData: response.data });
+      }).catch(function (error) {
+        console.log(error);
+      });
     }
   }, {
     key: 'onAddRow',
     value: function onAddRow(row) {
-      console.log(row);
+      var _this3 = this;
+
       if (row && row.question != "" && row.answer != "") {
-        (0, _FAQ_utils.handleInsertQuestion)(row);
-        this.setState(function (prevState) {
-          return { tableData: [].concat(_toConsumableArray(prevState.tableData), [row]) };
+        (0, _FAQ_utils.handleInsertQuestion)(row, function (success) {
+          if (success) _this3.setTableData();
         });
       } else {
         alert("Please fill out all fields");
@@ -52536,9 +52522,14 @@ var FAQ = function (_Component) {
   }, {
     key: 'beforeSaveCell',
     value: function beforeSaveCell(row, cellName, cellValue) {
+      var _this4 = this;
+
       if (row.hasOwnProperty("id") && cellValue != "") {
         row[cellName] = cellValue;
-        (0, _FAQ_utils.handleQuestionEdit)(row);
+        (0, _FAQ_utils.handleQuestionEdit)(row, function (success) {
+          if (success) _this4.setTableData();
+        });
+        return true;
       } else {
         alert("Please don't leave a field blank");
         return false;
@@ -63363,13 +63354,16 @@ function getAllQuestions() {
   });
 }
 
-function handleQuestionEdit(faq) {
+function handleQuestionEdit(faq, callback) {
   (0, _axios2.default)({
     method: "put",
     url: URL + '/faq/edit/',
     data: faq
-  }).then(function (response) {}).catch(function (error) {
+  }).then(function (response) {
+    if (response.data.faq) callback(true);else callback(false);
+  }).catch(function (error) {
     console.log(error);
+    alert('Failed to update FAQ');
   });
 }
 
@@ -63382,17 +63376,20 @@ function handleDeleteQuestions(faqIDs) {
     }
   }).then(function (response) {}).catch(function (error) {
     console.log(error);
+    alert('Failed to delete FAQ');
   });
 }
 
-function handleInsertQuestion(faq) {
-  console.log(faq);
+function handleInsertQuestion(faq, callback) {
   (0, _axios2.default)({
     method: "post",
     url: URL + '/faq/insert',
     data: faq
-  }).then(function (response) {}).catch(function (error) {
+  }).then(function (response) {
+    if (response.data.faq) callback(true);else callback(false);
+  }).catch(function (error) {
     console.log(error);
+    alert('Failed to insert FAQ');
   });
 }
 
@@ -64341,20 +64338,18 @@ var Activities = function (_Component) {
 	_createClass(Activities, [{
 		key: 'componentDidMount',
 		value: function componentDidMount() {
-			var _this2 = this;
-
-			(0, _Activities_utils.getAllActivities)().then(function (response) {
-				if (response.data) {
-					_this2.setTableData(response.data);
-				}
-			}).catch(function (error) {
-				console.log(error);
-			});
+			this.setTableData();
 		}
 	}, {
 		key: 'setTableData',
-		value: function setTableData(responseData) {
-			this.setState({ tableData: responseData });
+		value: function setTableData() {
+			var _this2 = this;
+
+			(0, _Activities_utils.getAllActivities)().then(function (response) {
+				if (response.data) _this2.setState({ tableData: response.data });
+			}).catch(function (error) {
+				console.log(error);
+			});
 		}
 	}, {
 		key: 'validateData',
@@ -64412,7 +64407,9 @@ var Activities = function (_Component) {
 				isOpen: isOpen
 			});
 
-			if (isValid) (0, _Activities_utils.handleInsertActivities)(newRow);
+			if (isValid) (0, _Activities_utils.handleInsertActivities)(newRow, function (success) {
+				if (success) _this3.setTableData();
+			});
 		}
 	}, {
 		key: 'onDeleteRow',
@@ -64424,6 +64421,8 @@ var Activities = function (_Component) {
 	}, {
 		key: 'beforeSaveCell',
 		value: function beforeSaveCell(row, cellName, cellValue) {
+			var _this4 = this;
+
 			if (!this.validateData(row, cellName, cellValue)) return false;
 			var newRow = Object.assign({}, row);
 			if (cellName === 'grade') {
@@ -64439,7 +64438,9 @@ var Activities = function (_Component) {
 			if (cellName === 'isNewActivity' || cellName === 'isOpen') {
 				newRow[cellName] = Boolean(cellValue);
 			}
-			(0, _Activities_utils.handleEditActivities)(newRow);
+			(0, _Activities_utils.handleEditActivities)(newRow, function (success) {
+				if (success) _this4.setTableData();
+			});
 		}
 	}, {
 		key: 'render',
@@ -66837,12 +66838,14 @@ function getAllActivities() {
 	});
 }
 
-function handleEditActivities(activity) {
+function handleEditActivities(activity, callback) {
 	(0, _axios2.default)({
 		method: "put",
 		url: URL + '/activities/edit/',
 		data: activity
-	}).then(function (response) {}).catch(function (error) {
+	}).then(function (response) {
+		if (response.data.user) callback(true);else callback(false);
+	}).catch(function (error) {
 		console.log(error);
 		alert('Failed to edit activity');
 	});
@@ -66859,12 +66862,14 @@ function handleDeleteActivities(activityIDs) {
 		alert('Failed to delete activity');
 	});
 }
-function handleInsertActivities(activity) {
+function handleInsertActivities(activity, callback) {
 	(0, _axios2.default)({
 		method: "post",
 		url: URL + '/activities/insert/',
 		data: activity
-	}).then(function (response) {}).catch(function (error) {
+	}).then(function (response) {
+		if (response.data.activity) callback(true);else callback(false);
+	}).catch(function (error) {
 		console.log(error);
 		alert('Failed to insert activity');
 	});
@@ -78336,6 +78341,272 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
+
+/***/ }),
+/* 569 */,
+/* 570 */,
+/* 571 */,
+/* 572 */,
+/* 573 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(13);
+
+var _reactBootstrapTable = __webpack_require__(133);
+
+var _Users_utils = __webpack_require__(574);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Users = function (_Component) {
+	_inherits(Users, _Component);
+
+	function Users(props) {
+		_classCallCheck(this, Users);
+
+		var _this = _possibleConstructorReturn(this, (Users.__proto__ || Object.getPrototypeOf(Users)).call(this, props));
+
+		_this.setTableData = _this.setTableData.bind(_this);
+		_this.onAddRow = _this.onAddRow.bind(_this);
+		_this.onDeleteRow = _this.onDeleteRow.bind(_this);
+
+		_this.state = {
+			tableData: []
+		};
+		return _this;
+	}
+
+	_createClass(Users, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			this.setTableData();
+		}
+	}, {
+		key: 'setTableData',
+		value: function setTableData() {
+			var _this2 = this;
+
+			(0, _Users_utils.getAllUsers)().then(function (response) {
+				if (response.data) _this2.setState({ tableData: response.data });
+			}).catch(function (error) {
+				console.log(error);
+			});
+		}
+	}, {
+		key: 'validateData',
+		value: function validateData(row) {
+			if (!row.name.length) {
+				alert('Name cannot be empty');
+				return false;
+			} else if (!row.username.length) {
+				alert('Username cannot be empty');
+				return false;
+			} else if (isNaN(row.day)) {
+				alert('Day has to be a valid number');
+				return false;
+			} else if (isNaN(row.phoneNumber)) {
+				alert('Phone number has to be a valid number');
+				return false;
+			}
+
+			return true;
+		}
+	}, {
+		key: 'onAddRow',
+		value: function onAddRow(row) {
+			var _this3 = this;
+
+			var isValid = this.validateData(row);
+
+			if (!isValid) return;
+
+			var day = row.day,
+			    activities = row.activities;
+
+			day = Number(day);
+			if (activities.slice(-1) === ',') activities = activities.slice(0, -1);
+			activities = activities.split(",");
+
+			var newRow = Object.assign({}, row, {
+				day: day,
+				activities: activities,
+				password: 'password'
+			});
+
+			delete newRow.id;
+
+			(0, _Users_utils.handleInsertUsers)(newRow, function (success) {
+				if (success) _this3.setTableData();
+			});
+		}
+	}, {
+		key: 'onDeleteRow',
+		value: function onDeleteRow(activityIDs) {
+			if (activityIDs) {
+				(0, _Users_utils.handleDeleteUsers)(activityIDs);
+			}
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			var options = {
+				onDeleteRow: this.onDeleteRow,
+				onAddRow: this.onAddRow
+			};
+			var selectRow = {
+				mode: 'checkbox' //radio or checkbox
+			};
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement('link', { rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css' }),
+				_react2.default.createElement('link', { rel: 'stylesheet', href: 'https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css' }),
+				_react2.default.createElement(
+					'h3',
+					null,
+					' Users '
+				),
+				_react2.default.createElement(
+					_reactBootstrapTable.BootstrapTable,
+					{
+						data: this.state.tableData,
+						insertRow: true,
+						deleteRow: true,
+						selectRow: selectRow,
+						striped: true,
+						hover: true,
+						condensed: true,
+						pagination: true,
+						options: options
+					},
+					_react2.default.createElement(
+						_reactBootstrapTable.TableHeaderColumn,
+						{ dataField: 'id', dataSort: true, isKey: true, hidden: true, hiddenOnInsert: true },
+						'ID'
+					),
+					_react2.default.createElement(
+						_reactBootstrapTable.TableHeaderColumn,
+						{ dataField: 'name' },
+						'Name'
+					),
+					_react2.default.createElement(
+						_reactBootstrapTable.TableHeaderColumn,
+						{ dataField: 'username' },
+						'Username'
+					),
+					_react2.default.createElement(
+						_reactBootstrapTable.TableHeaderColumn,
+						{ dataField: 'school' },
+						'School'
+					),
+					_react2.default.createElement(
+						_reactBootstrapTable.TableHeaderColumn,
+						{ dataField: 'day', width: '70' },
+						'Day'
+					),
+					_react2.default.createElement(
+						_reactBootstrapTable.TableHeaderColumn,
+						{ dataField: 'phoneNumber' },
+						'Phone Number'
+					),
+					_react2.default.createElement(
+						_reactBootstrapTable.TableHeaderColumn,
+						{ dataField: 'activities' },
+						'Activity IDs'
+					)
+				)
+			);
+		}
+	}]);
+
+	return Users;
+}(_react.Component);
+
+exports.default = Users;
+
+/***/ }),
+/* 574 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.getAllUsers = getAllUsers;
+exports.handleDeleteUsers = handleDeleteUsers;
+exports.handleInsertUsers = handleInsertUsers;
+
+var _axios = __webpack_require__(153);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _moment = __webpack_require__(2);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var URL = 'https://water-fest.herokuapp.com';
+
+function getAllUsers() {
+	return (0, _axios2.default)({
+		method: "get",
+		url: URL + '/users/list/'
+	});
+}
+
+function handleDeleteUsers(userIDs) {
+	(0, _axios2.default)({
+		method: "delete",
+		url: URL + '/users/delete/',
+		data: {
+			userIDs: userIDs
+		}
+	}).then(function (response) {}).catch(function (error) {
+		console.log(error);
+		alert('Failed to delete user');
+	});
+}
+
+function handleInsertUsers(user, callback) {
+	(0, _axios2.default)({
+		method: "post",
+		url: URL + '/users/insert/',
+		data: user
+	}).then(function (response) {
+		if (response.data.code === 11000) {
+			alert('Failed to insert user: Duplicate username');
+			callback(false);
+		} else if (response.data.user) {
+			callback(true);
+		}
+	}).catch(function (error) {
+		console.log(error);
+		alert('Failed to insert user');
+		callback(false);
+	});
+}
 
 /***/ })
 /******/ ]);

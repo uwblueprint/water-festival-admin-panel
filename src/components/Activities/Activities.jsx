@@ -24,18 +24,15 @@ class Activities extends Component {
 	}
 
 	componentDidMount() {
-		getAllActivities().then(response => {
-			if (response.data) {
-				this.setTableData(response.data);
-			}
+		this.setTableData();
+	}
 
+	setTableData() {
+		getAllActivities().then(response => {
+			if (response.data) this.setState({ tableData: response.data })
 		}).catch(function (error) {
 			console.log(error);
 		});
-	}
-
-	setTableData(responseData) {
-		this.setState({ tableData: responseData })
 	}
 
 	validateData(row, cellName, cellValue) {
@@ -83,7 +80,9 @@ class Activities extends Component {
 			isOpen
 		});
 
-		if (isValid) handleInsertActivities(newRow);
+		if (isValid) handleInsertActivities(newRow, success => {
+			if (success) this.setTableData();
+		});
 	}
 
 	onDeleteRow(activityIDs) {
@@ -106,7 +105,9 @@ class Activities extends Component {
 		if (cellName === 'isNewActivity' || cellName === 'isOpen') {
 			newRow[cellName] = Boolean(cellValue);
 		}
-		handleEditActivities(newRow);
+		handleEditActivities(newRow, success => {
+			if (success) this.setTableData();
+		});
 	}
 
 	render() {
