@@ -53,6 +53,9 @@ node_modules
 /ReactAndroid/src/androidTest/assets/AndroidTestBundle.js
 *.js.meta
 
+# JS FILES
+src/static/js/
+
 /coverage
 /third-party
 

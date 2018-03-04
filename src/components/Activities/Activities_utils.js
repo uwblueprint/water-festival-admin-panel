@@ -55,12 +55,12 @@ export function handleDeleteActivities(activityIDs) {
 	});
 }
 export function handleInsertActivities(activity) {
-	axios({
-		method: "put",
-		url: `${URL}/activities/insert/`,
-		data: activity
-	}).then(response => {
-	}).catch(function (error) {
-		console.log(error);
-	});
+  axios({
+    method: "post",
+    url: `${URL}/activities/insert/`,
+    data: activity
+  }).then(response => {
+  }).catch(function (error) {
+    console.log(error);
+  });
 }

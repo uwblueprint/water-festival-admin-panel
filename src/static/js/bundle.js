@@ -51118,13 +51118,13 @@ var _Row = __webpack_require__(132);
 
 var _Row2 = _interopRequireDefault(_Row);
 
-var _FAQPage = __webpack_require__(392);
+var _FAQ = __webpack_require__(392);
 
-var _FAQPage2 = _interopRequireDefault(_FAQPage);
+var _FAQ2 = _interopRequireDefault(_FAQ);
 
-var _ActivitiesPage = __webpack_require__(450);
+var _Activities = __webpack_require__(450);
 
-var _ActivitiesPage2 = _interopRequireDefault(_ActivitiesPage);
+var _Activities2 = _interopRequireDefault(_Activities);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -51140,10 +51140,7 @@ var App = function (_Component) {
   function App(props) {
     _classCallCheck(this, App);
 
-    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
-
-    _this.state = {};
-    return _this;
+    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
   }
 
   _createClass(App, [{
@@ -51183,8 +51180,8 @@ var App = function (_Component) {
           _react2.default.createElement(
             _Row2.default,
             { className: 'show-grid' },
-            _react2.default.createElement(_FAQPage2.default, null),
-            _react2.default.createElement(_ActivitiesPage2.default, null)
+            _react2.default.createElement(_FAQ2.default, null),
+            _react2.default.createElement(_Activities2.default, null)
           )
         )
       );
@@ -52456,6 +52453,8 @@ var _FAQ_utils = __webpack_require__(431);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -52476,20 +52475,7 @@ var FAQ = function (_Component) {
     _this.beforeSaveCell = _this.beforeSaveCell.bind(_this);
 
     _this.state = {
-      tableData: [{
-        id: 0,
-        question: "Where are the washrooms?",
-        answer: "The washrooms are located by the museum. Please consult the map for directions."
-      }, {
-        id: 1,
-        question: "How does parking work?",
-        answer: "The parking is located by the entrance. There will be ushers there to guide you."
-      }, {
-        id: 2,
-        question: "What should I bring?",
-        answer: "Sunscreen, water, and a lunch. A towel to sit on during lunch may also come in handy, as lunch will be held outside."
-
-      }]
+      tableData: []
     };
     return _this;
   }
@@ -52530,8 +52516,12 @@ var FAQ = function (_Component) {
   }, {
     key: 'onAddRow',
     value: function onAddRow(row) {
+      console.log(row);
       if (row && row.question != "" && row.answer != "") {
         (0, _FAQ_utils.handleInsertQuestion)(row);
+        this.setState(function (prevState) {
+          return { tableData: [].concat(_toConsumableArray(prevState.tableData), [row]) };
+        });
       } else {
         alert("Please fill out all fields");
       }
@@ -52558,22 +52548,21 @@ var FAQ = function (_Component) {
     key: 'render',
     value: function render() {
       if (this.state.tableData.length !== 0) {
-        var inputFieldStyle = {
-          width: "100%"
-        };
-
         var options = {
           onDeleteRow: this.onDeleteRow,
           onAddRow: this.onAddRow
         };
+
         var cellEdit = {
           mode: 'click', // click cell to edit
           beforeSaveCell: this.beforeSaveCell,
           blurToSave: true
         };
+
         var selectRow = {
           mode: 'checkbox' //radio or checkbox
         };
+
         return _react2.default.createElement(
           'div',
           null,
@@ -52601,7 +52590,7 @@ var FAQ = function (_Component) {
             _react2.default.createElement(
               _reactBootstrapTable.TableHeaderColumn,
               { dataField: 'id', dataSort: true, isKey: true, hidden: true, hiddenOnInsert: true },
-              'ID'
+              ' ID '
             ),
             _react2.default.createElement(
               _reactBootstrapTable.TableHeaderColumn,
@@ -63383,6 +63372,7 @@ function handleQuestionEdit(faq) {
     console.log(error);
   });
 }
+
 function handleDeleteQuestions(faqIDs) {
   (0, _axios2.default)({
     method: "delete",
@@ -63394,10 +63384,12 @@ function handleDeleteQuestions(faqIDs) {
     console.log(error);
   });
 }
+
 function handleInsertQuestion(faq) {
+  console.log(faq);
   (0, _axios2.default)({
-    method: "put",
-    url: URL + '/faq/insert/',
+    method: "post",
+    url: URL + '/faq/insert',
     data: faq
   }).then(function (response) {}).catch(function (error) {
     console.log(error);
@@ -66842,7 +66834,7 @@ function handleDeleteActivities(activityIDs) {
 }
 function handleInsertActivities(activity) {
 	(0, _axios2.default)({
-		method: "put",
+		method: "post",
 		url: URL + '/activities/insert/',
 		data: activity
 	}).then(function (response) {}).catch(function (error) {
@@ -66906,10 +66898,10 @@ var Login = function (_Component) {
 						_react2.default.createElement(_reactBootstrap.Col, { xs: 1, md: 4 }),
 						_react2.default.createElement(
 							_reactBootstrap.Col,
-							{ xs: 4, md: 4 },
+							{ xs: 4, md: 6 },
 							_react2.default.createElement(
 								'h1',
-								{ className: 'text-center login-title', style: { "margin-top": "25px" } },
+								{ className: 'text-center login-title', style: { "marginTop": "25px" } },
 								'Sign in to continue to the Dashboard'
 							),
 							_react2.default.createElement(
@@ -66921,7 +66913,7 @@ var Login = function (_Component) {
 									{ className: 'form-signin', action: '/login', method: 'post' },
 									_react2.default.createElement(
 										_reactBootstrap.FormGroup,
-										{ controlId: 'formLogin' },
+										null,
 										_react2.default.createElement(_reactBootstrap.FormControl, {
 											type: 'text',
 											name: 'username',
