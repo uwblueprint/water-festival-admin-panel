@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import {render} from 'react-dom';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import DateTime from 'react-datetime';
-import moment from 'moment';
 import {
 	getAllActivities,
 	handleEditActivities,
@@ -113,15 +111,18 @@ class Activities extends Component {
 		const options = {
 			onDeleteRow: this.onDeleteRow,
 			onAddRow: this.onAddRow
-		};
+    };
+    
 		const cellEdit = {
 			mode: 'click', // click cell to edit
 			beforeSaveCell: this.beforeSaveCell,
 			blurToSave: true
-		};
+    };
+    
 		const selectRow = {
 			mode: 'checkbox' //radio or checkbox
-		};
+    };
+    
 		return (
 			<div>
 				<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" />

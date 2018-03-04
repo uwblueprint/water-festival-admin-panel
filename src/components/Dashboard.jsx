@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import {render} from 'react-dom';
-import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar'
-import Button from 'react-bootstrap/lib/Button'
-import Grid from 'react-bootstrap/lib/Grid'
-import Row from 'react-bootstrap/lib/Row'
+import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
+import Button from 'react-bootstrap/lib/Button';
+import Grid from 'react-bootstrap/lib/Grid';
+import Row from 'react-bootstrap/lib/Row';
 import FAQ from './FAQ/FAQ';
-import Events from './Activities/Activities'
+import Events from './Activities/Activities';
+import Alerts from './Alerts/Alerts';
 
 class App extends Component {
   constructor(props) {
@@ -39,6 +40,7 @@ class App extends Component {
 					<Row className="show-grid">
               <FAQ />
               <Events />
+              <Alerts />
           </Row>
 				</Grid>
       </div>
