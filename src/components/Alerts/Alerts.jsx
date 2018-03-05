@@ -24,49 +24,39 @@ class FAQ extends Component {
 	}
 
 	componentDidMount() {
-    	getAllAlerts().then(response => {
-			if(response.data){
-				this.setTableData(response.data);
-			}
+		this.setTableData();
+	}
+
+	setTableData() {
+		getAllAlerts().then(response => {
+			if(response.data) this.setState({ tableData: response.data })
 		}).catch(function (error) {
 			console.log(error);
 		});
-  	}
-
-	componentWillReceiveProps(nextProps) {
-    	getAllAlerts().then(response => {
-		if(response.data){
-			this.setTableData(response.data);
-		}}).catch(function (error) {
-			console.log(error);
-		});
-  	}
-  
-	setTableData(responseData) {
-		this.setState({ tableData: responseData })
-  	}
+	}
 
 	onAddRow(row) {
 		if(row && row.question != "" && row.answer != "") {
-			handleInsertAlert(row);
-			this.setState((prevState) => {
-				return {tableData: [...prevState.tableData, row]};
+			handleInsertAlert(row, success => {
+				if (success) this.setTableData();
 			});
 		} else {
 			alert("Please fill out all fields")
 		}
 	}
-  
-  	onDeleteRow(alertIDs) {
+
+	onDeleteRow(alertIDs) {
 		if(alertIDs) {
 			handleDeleteAlerts(alertIDs);
 		}
-  	}
+	}
 
 	beforeSaveCell(row, cellName, cellValue) {
 		if(row.hasOwnProperty("id") && cellValue != "") {
 			row[cellName] = cellValue;
-			handleAlertEdit(row);
+			handleAlertEdit(row, success => {
+				if (success) this.setTableData();
+			});
 		} else {
 			alert("Please don't leave a field blank");
 			return false;
