@@ -11,6 +11,7 @@
     "url": "https://github.com/uwblueprint/water-festival/issues"
   },
   "dependencies": {
+    "auth0-js": "^9.3.2",
     "axios": "^0.17.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
