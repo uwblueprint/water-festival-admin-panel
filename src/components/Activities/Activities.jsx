@@ -113,17 +113,17 @@ class Activities extends Component {
 			onDeleteRow: this.onDeleteRow,
 			onAddRow: this.onAddRow
     };
-    
+
 		const cellEdit = {
 			mode: 'click', // click cell to edit
 			beforeSaveCell: this.beforeSaveCell,
 			blurToSave: true
     };
-    
+
 		const selectRow = {
 			mode: 'checkbox' //radio or checkbox
     };
-    
+
 		return (
 			<div>
 				<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" />
@@ -144,11 +144,12 @@ class Activities extends Component {
 					<TableHeaderColumn dataField='id' dataSort isKey={ true } hidden hiddenOnInsert>ID</TableHeaderColumn>
 					<TableHeaderColumn dataField='title'>Title</TableHeaderColumn>
 					<TableHeaderColumn dataField='description'>Description</TableHeaderColumn>
-					<TableHeaderColumn dataField='station' width='70'>Station</TableHeaderColumn>
+					<TableHeaderColumn dataField='imageURI'>Image</TableHeaderColumn>
+					<TableHeaderColumn dataField='station' width='90'>Station</TableHeaderColumn>
 					<TableHeaderColumn dataField='grade' width='80'>Grade</TableHeaderColumn>
 					<TableHeaderColumn dataField='isNewActivity' width='90'>Is New?</TableHeaderColumn>
 					<TableHeaderColumn dataField='isOpen' width='80'>Open?</TableHeaderColumn>
-					<TableHeaderColumn dataField='state'>State</TableHeaderColumn>
+					<TableHeaderColumn dataField='state' width='90'>State</TableHeaderColumn>
 				</BootstrapTable>
 			</div>
 		);
