@@ -41,7 +41,7 @@ class FAQ extends Component {
 			console.log(error);
 		});
   	}
-  
+
 	setTableData(responseData) {
 		this.setState({ tableData: responseData })
   	}
@@ -56,7 +56,7 @@ class FAQ extends Component {
 			alert("Please fill out all fields")
 		}
 	}
-  
+
   	onDeleteRow(alertIDs) {
 		if(alertIDs) {
 			handleDeleteAlerts(alertIDs);
@@ -76,7 +76,9 @@ class FAQ extends Component {
   render() {
     const options = {
       onDeleteRow: this.onDeleteRow,
-      onAddRow: this.onAddRow
+      onAddRow: this.onAddRow,
+			defaultSortName: 'title',
+			defaultSortOrder: 'asc	'
     };
 
     const cellEdit = {
@@ -104,6 +106,7 @@ class FAQ extends Component {
           hover
           condensed
           pagination
+					search
           options={options}
         >
           <TableHeaderColumn dataField='id' dataSort isKey={ true } hidden hiddenOnInsert> ID </TableHeaderColumn>

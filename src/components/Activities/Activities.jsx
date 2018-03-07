@@ -40,13 +40,13 @@ class Activities extends Component {
 		if (!row.hasOwnProperty('id')) {
 			alert('Invalid row');
 			return false;
-		} else if (cellName === 'station' && isNaN(cellValue)) {
+		} else if (cellName === 'station' && cellValue.length > 0 && isNaN(cellValue)) {
 			alert('Station has to be a valid number');
 			return false;
-		} else if (cellName === 'grade' && isNaN(cellValue) && !Array.isArray(cellValue) && cellValue.indexOf(',') < 0) {
+		} else if (cellName === 'grade' && cellValue.length > 0 && isNaN(cellValue) && !Array.isArray(cellValue) && cellValue.indexOf(',') < 0) {
 			alert('Grade has to be a number or a comma-separated list of numbers');
 			return false;
-		} else if ((cellName === 'isNewActivity' || cellName === 'isOpen') && cellValue.toLowerCase() !== 'true' && cellValue.toLowerCase() !== 'false') {
+		} else if ((cellName === 'isNewActivity' || cellName === 'isOpen') && cellValue.length > 0 && cellValue.toLowerCase() !== 'true' && cellValue.toLowerCase() !== 'false') {
 			alert('Invalid boolean value. Has to be "true" or "false"');
 			return false;
 		} else if (cellName === 'title' && cellValue === '') {
@@ -67,11 +67,13 @@ class Activities extends Component {
 		});
 
 		let { station, grade, isNewActivity, isOpen } = row;
-		station = Number(station);
-		if (grade.slice(-1) === ',') grade = grade.slice(0, -1);
-		grade = grade.split(",").map(s => Number(s));
-		isNewActivity = Boolean(isNewActivity);
-		isOpen = Boolean(isOpen);
+		if (station.length > 0) station = Number(station);
+		if (grade.length > 0) {
+			if (grade.slice(-1) === ',') grade = grade.slice(0, -1);
+			grade = grade.split(",").map(s => Number(s));
+		}
+		isNewActivity = (isNewActivity == 'true');
+		isOpen = (isNewActivity == 'true');
 
 		const newRow = Object.assign({}, row, {
 			id: null,
@@ -93,16 +95,16 @@ class Activities extends Component {
 	beforeSaveCell(row, cellName, cellValue) {
 		if (!this.validateData(row, cellName, cellValue)) return false;
 		const newRow = Object.assign({}, row);
-		if (cellName === 'grade') {
+		if (cellName === 'grade' && cellValue.length > 0) {
 			if (cellValue.slice(-1) === ',') cellValue = cellValue.slice(0, -1);
 			const grade = cellValue.split(",").map(s => Number(s));
 			newRow['grade'] = grade;
 		}
-		if (cellName === 'station') {
+		if (cellName === 'station' && cellValue.length > 0) {
 			newRow[cellName] = Number(cellValue);
 		}
 		if (cellName === 'isNewActivity' || cellName === 'isOpen') {
-			newRow[cellName] = Boolean(cellValue);
+			newRow[cellName] = (cellValue == 'true');
 		}
 		handleEditActivities(newRow);
 	}
@@ -110,19 +112,21 @@ class Activities extends Component {
 	render() {
 		const options = {
 			onDeleteRow: this.onDeleteRow,
-			onAddRow: this.onAddRow
+			onAddRow: this.onAddRow,
+			defaultSortName: 'title',
+			defaultSortOrder: 'asc'
     };
-    
+
 		const cellEdit = {
 			mode: 'click', // click cell to edit
 			beforeSaveCell: this.beforeSaveCell,
 			blurToSave: true
     };
-    
+
 		const selectRow = {
 			mode: 'checkbox' //radio or checkbox
     };
-    
+
 		return (
 			<div>
 				<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" />
@@ -138,6 +142,7 @@ class Activities extends Component {
 					hover
 					condensed
 					pagination
+					search
 					options={options}
 				>
 					<TableHeaderColumn dataField='id' dataSort isKey={ true } hidden hiddenOnInsert>ID</TableHeaderColumn>
