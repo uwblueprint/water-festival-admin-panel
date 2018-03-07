@@ -24,41 +24,25 @@ class FAQ extends Component {
   }
 
   componentDidMount() {
-    var questionsPromise = getAllQuestions();
-    questionsPromise.then(response => {
-      if(response.data){
-        this.setTableData(response.data);
-      }
+		this.setTableData();
+  }
+
+  setTableData() {
+    getAllQuestions().then(response => {
+      if(response.data) this.setState({ tableData: response.data });
 		}).catch(function (error) {
 			console.log(error);
 		});
-  }
 
-	componentWillReceiveProps(nextProps) {
-    var questionsPromise = getAllQuestions();
-    questionsPromise.then(response => {
-      if(response.data){
-        this.setTableData(response.data);
-      }
-
-		}).catch(function (error) {
-			console.log(error);
-		});
-  }
-
-  setTableData(responseData) {
-    this.setState({ tableData: responseData })
   }
 
 	onAddRow(row) {
-    console.log(row)
 		if(row && row.question != "" && row.answer != "") {
-      handleInsertQuestion(row);
-      this.setState((prevState) => {
-        return {tableData: [...prevState.tableData, row]};
-      });
+      handleInsertQuestion(row, success => {
+				if(success) this.setTableData();
+			});
     } else {
-      alert("Please fill out all fields")
+      alert("Please fill out all fields");
     }
   }
 
@@ -71,7 +55,10 @@ class FAQ extends Component {
   beforeSaveCell(row, cellName, cellValue) {
     if(row.hasOwnProperty("id") && cellValue != "") {
       row[cellName] = cellValue;
-			handleQuestionEdit(row);
+			handleQuestionEdit(row, success => {
+				if(success) this.setTableData();
+			});
+			return true;
     } else {
       alert("Please don't leave a field blank");
       return false;
@@ -82,8 +69,8 @@ class FAQ extends Component {
     const options = {
       onDeleteRow: this.onDeleteRow,
       onAddRow: this.onAddRow,
-			defaultSortName: 'title',
-			defaultSortOrder: 'asc	'
+			defaultSortName: 'question',
+			defaultSortOrder: 'asc'
     };
 
     const cellEdit = {

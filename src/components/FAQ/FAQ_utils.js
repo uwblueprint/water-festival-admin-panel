@@ -9,14 +9,17 @@ export function getAllQuestions() {
     })
 }
 
-export function handleQuestionEdit(faq) {
+export function handleQuestionEdit(faq, callback) {
   axios({
     method: "put",
     url: `${URL}/faq/edit/`,
     data: faq
   }).then(response => {
+		if (response.data.faq) callback(true);
+		else callback(false);
   }).catch(function (error) {
     console.log(error);
+		alert('Failed to update FAQ');
   });
 }
 
@@ -25,21 +28,25 @@ export function handleDeleteQuestions(faqIDs) {
     method: "delete",
     url: `${URL}/faq/delete/`,
     data: {
-      faqIDs: faqIDs
+      faqIDs
     }
   }).then(response => {
   }).catch(function (error) {
     console.log(error);
+		alert('Failed to delete FAQ');
   });
 }
 
-export function handleInsertQuestion(faq) {
+export function handleInsertQuestion(faq, callback) {
   axios({
     method: "post",
     url: `${URL}/faq/insert`,
     data: faq
   }).then(response => {
+		if (response.data.faq) callback(true);
+		else callback(false);
   }).catch(function (error) {
     console.log(error);
+		alert('Failed to insert FAQ');
   });
 }

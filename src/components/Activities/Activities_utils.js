@@ -9,12 +9,14 @@ export function getAllActivities() {
 		})
 }
 
-export function handleEditActivities(activity) {
+export function handleEditActivities(activity, callback) {
 	axios({
 		method: "put",
 		url: `${URL}/activities/edit/`,
 		data: activity
 	}).then(response => {
+		if (response.data.user) callback(true);
+		else callback(false);
 	}).catch(function (error) {
 		console.log(error);
 		alert('Failed to edit activity');
@@ -33,12 +35,14 @@ export function handleDeleteActivities(activityIDs) {
 		alert('Failed to delete activity');
 	});
 }
-export function handleInsertActivities(activity) {
+export function handleInsertActivities(activity, callback) {
   axios({
     method: "post",
     url: `${URL}/activities/insert/`,
     data: activity
   }).then(response => {
+		if (response.data.activity) callback(true);
+		else callback(false);
   }).catch(function (error) {
     console.log(error);
 		alert('Failed to insert activity');

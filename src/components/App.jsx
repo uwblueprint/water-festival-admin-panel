@@ -11,6 +11,6 @@ ReactDOM.render((
         <Route path="/dashboard" component={Dashboard}/>
       </Switch>
      </BrowserRouter>
-  ), 
+  ),
   document.getElementById('react-app')
 )
