@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const URL = 'https://water-fest.herokuapp.com';
+const URL = 'http://192.168.42.33:9090';//'https://water-fest.herokuapp.com';
 
 export function getAllAlerts() {
     return axios({
@@ -48,5 +48,17 @@ export function handleInsertAlert(alert, callback) {
   }).catch(function (error) {
     console.log(error);
 		alert('Failed to insert alert');
+  });
+}
+
+export function sendNotification(alert) {
+  axios({
+    method: "post",
+    url: `${URL}/tokens/send`,
+    data: alert
+  }).then(response => {
+  }).catch(function (error) {
+    console.log(error);
+    alert('Failed to send notifications!');
   });
 }
