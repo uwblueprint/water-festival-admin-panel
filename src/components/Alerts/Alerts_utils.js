@@ -50,3 +50,15 @@ export function handleInsertAlert(alert, callback) {
 		alert('Failed to insert alert');
   });
 }
+
+export function sendNotification(alert) {
+  axios({
+    method: "post",
+    url: `${URL}/tokens/send`,
+    data: alert
+  }).then(response => {
+  }).catch(function (error) {
+    console.log(error);
+    alert('Failed to send notifications!');
+  });
+}
