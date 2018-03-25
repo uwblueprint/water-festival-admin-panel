@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const URL = 'http://192.168.42.33:9090';//'https://water-fest.herokuapp.com';
+const URL = 'https://water-fest.herokuapp.com';
 
 export function getAllAlerts() {
     return axios({
