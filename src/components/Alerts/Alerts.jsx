@@ -67,7 +67,11 @@ class FAQ extends Component {
 	}
 
   buttonFormatter(cell, row) {
-     return (<Button bsStyle="primary" onClick={() => sendNotification(row)}>Send</Button>);
+    if(row.sentDate){
+      return (<Button bsStyle="danger" disabled onClick={() => sendNotification(row)}>Already Sent</Button>);
+    } else {
+      return (<Button bsStyle="primary" onClick={() => sendNotification(row)}>Send</Button>);
+    }
   }
 
   render() {

@@ -59,6 +59,9 @@ export function sendNotification(alert) {
   }).then(response => {
   }).catch(function (error) {
     console.log(error);
-    alert('Failed to send notifications!');
+    alert('Failed to send notification!');
+    return;
   });
+  alert.sentDate = new Date();
+  handleAlertEdit(alert);
 }
