@@ -63,5 +63,7 @@ export function sendNotification(alert) {
     return;
   });
   alert.sentDate = new Date();
-  handleAlertEdit(alert);
+  handleAlertEdit(alert, function(result) {
+    if (!result) console.log("Failed to update sent date for alert!");
+  });
 }
