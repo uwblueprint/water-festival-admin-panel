@@ -50,3 +50,20 @@ export function handleInsertAlert(alert, callback) {
 		alert('Failed to insert alert');
   });
 }
+
+export function sendNotification(alert) {
+  axios({
+    method: "post",
+    url: `${URL}/tokens/send`,
+    data: alert
+  }).then(response => {
+  }).catch(function (error) {
+    console.log(error);
+    alert('Failed to send notification!');
+    return;
+  });
+  alert.sentDate = new Date();
+  handleAlertEdit(alert, function(result) {
+    if (!result) console.log("Failed to update sent date for alert!");
+  });
+}

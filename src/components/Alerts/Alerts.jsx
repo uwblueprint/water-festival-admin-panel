@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import {render} from 'react-dom';
 import Grid from 'react-bootstrap/lib/Grid'
 import Row from 'react-bootstrap/lib/Row'
+import Button from 'react-bootstrap/lib/Button';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import {
   getAllAlerts,
+  getAllTokens,
   handleAlertEdit,
   handleDeleteAlerts,
   handleInsertAlert,
+  sendNotification,
 } from './Alerts_utils';
 
 class FAQ extends Component {
@@ -57,11 +60,19 @@ class FAQ extends Component {
 			handleAlertEdit(row, success => {
 				if (success) this.setTableData();
 			});
-		} else {
+		} else if (cellName != "push") {
 			alert("Please don't leave a field blank");
 			return false;
 		}
 	}
+
+  buttonFormatter(cell, row) {
+    if(row.sentDate){
+      return (<Button bsStyle="danger" disabled onClick={() => sendNotification(row)}>Already Sent</Button>);
+    } else {
+      return (<Button bsStyle="primary" onClick={() => sendNotification(row)}>Send</Button>);
+    }
+  }
 
   render() {
     const options = {
@@ -102,6 +113,7 @@ class FAQ extends Component {
           <TableHeaderColumn dataField='id' dataSort isKey={ true } hidden hiddenOnInsert> ID </TableHeaderColumn>
           <TableHeaderColumn dataField='name'>Name</TableHeaderColumn>
           <TableHeaderColumn dataField='description'>Description</TableHeaderColumn>
+          <TableHeaderColumn dataField='push' editable={false} dataFormat={this.buttonFormatter.bind(this)}>Push Notification</TableHeaderColumn>
         </BootstrapTable>
       </div>
     );
