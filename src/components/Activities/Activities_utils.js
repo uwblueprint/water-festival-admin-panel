@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const URL = 'https://water-fest.herokuapp.com';
+const URL = 'https://water-festival-server.appspot.com';
 
 export function getAllActivities() {
 		return axios({
