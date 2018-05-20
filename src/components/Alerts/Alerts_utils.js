@@ -67,3 +67,20 @@ export function sendNotification(alert) {
     if (!result) console.log("Failed to update sent date for alert!");
   });
 }
+
+export function sendText(alert) {
+  axios({
+    method: "post",
+    url: `${URL}/alerts/text`,
+    data: alert
+  }).then(response => {
+  }).catch(function (error) {
+    console.log(error);
+    alert('Failed to send notification!');
+    return;
+  });
+  alert.isSmsSent = true;
+  handleAlertEdit(alert, function(result) {
+    if (!result) console.log("Failed to update sent date for alert!");
+  });
+}
