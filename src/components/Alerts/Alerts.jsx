@@ -22,7 +22,7 @@ class FAQ extends Component {
 		this.beforeSaveCell = this.beforeSaveCell.bind(this);
 
 		this.state = {
-		tableData: [],
+      tableData: [],
 		};
 	}
 
@@ -64,7 +64,15 @@ class FAQ extends Component {
 			alert("Please don't leave a field blank");
 			return false;
 		}
-	}
+  }
+  
+  textButtonFormatter(cell, row) {
+    if(row.isSmsSent){
+      return (<Button bsStyle="danger" disabled onClick={() => sendText(row)}>Already Sent</Button>);
+    } else {
+      return (<Button bsStyle="primary" onClick={() => sendText(row)}>Send</Button>);
+    }
+  }
 
   buttonFormatter(cell, row) {
     if(row.sentDate){
@@ -114,6 +122,7 @@ class FAQ extends Component {
           <TableHeaderColumn dataField='name'>Name</TableHeaderColumn>
           <TableHeaderColumn dataField='description'>Description</TableHeaderColumn>
           <TableHeaderColumn dataField='push' editable={false} dataFormat={this.buttonFormatter.bind(this)}>Push Notification</TableHeaderColumn>
+          <TableHeaderColumn dataField='push' editable={false} dataFormat={this.textButtonFormatter.bind(this)}>Text Notification</TableHeaderColumn>
         </BootstrapTable>
       </div>
     );
